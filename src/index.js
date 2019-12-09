@@ -13,8 +13,6 @@ app.use(express.json());
 app.use(cors());
 app.use(router);
 
-// TODO: connect to db
-/*
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true })
     .then(() => {
         console.log('Connected to database!');
@@ -23,8 +21,3 @@ mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true })
         });
     })
     .catch((err) => console.error(`Failed to connect to database. Error: ` + err));
-*/
-app.listen(port, () => {
-
-    console.log(`Listening on http://127.0.0.1:${port}`);
-});
