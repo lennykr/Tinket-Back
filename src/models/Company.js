@@ -15,7 +15,8 @@ const CompanySchema = mongoose.Schema({
     },
     tags: Array<String>[],
     bio: String,
-    review: Number
+    review: Number,
+    role: String
 });
 
 module.exports = mongoose.model('Company', CompanySchema);

@@ -15,6 +15,7 @@ const UserSchema = mongoose.Schema({
         linkedIn: String,
     },
     review: Number,
+    role: String,
 });
 
 module.exports = mongoose.model('User', UserSchema);
