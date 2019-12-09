@@ -14,7 +14,7 @@ const UserSchema = mongoose.Schema({
     contactInfo: {
         email: String,
         phoneNumber: String,
-        linkedIn: String,
+        linkedIn: String
     },
     review: Number,
     role: String,

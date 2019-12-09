@@ -14,7 +14,10 @@ const CompanySchema = mongoose.Schema({
         street: String,
         postalCode: String,
     },
-    tags: Array<Skill>[],
+    tags: [{
+        name: String,
+        url: String
+    }],
     bio: String,
     review: Number,
     role: String

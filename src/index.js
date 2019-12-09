@@ -1,8 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const {resolve} = require('path');
-require('dotenv').config({path: resolve(process.cwd(), '../.env')});
+require('dotenv').config();
 const router = require('./routes');
 const port = 3000;
 
