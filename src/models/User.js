@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Skill = require('./Skill');
 
 const UserSchema = mongoose.Schema({
     nickname: String,
@@ -6,7 +7,7 @@ const UserSchema = mongoose.Schema({
     lastname: String,
     password: String,
     dateOfBirth: Date,
-    skills: Array<String>[], 
+    skills: Array<Skill>[], 
     bio: String,
     experience: String,
     contactInfo: {

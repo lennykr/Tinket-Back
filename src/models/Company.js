@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Skill = require('./Skill');
 
 const CompanySchema = mongoose.Schema({
     name: String,
@@ -13,7 +14,7 @@ const CompanySchema = mongoose.Schema({
         street: String,
         postalCode: String,
     },
-    tags: Array<String>[],
+    tags: Array<Skill>[],
     bio: String,
     review: Number,
     role: String
