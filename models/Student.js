@@ -13,7 +13,8 @@ const StudentSchema = mongoose.Schema({
         phoneNumber: String,
         linkedIn: String,
     },
-    review: Number
+    review: Number,
+    role: String
 });
 
 module.exports = mongoose.model('Student', StudentSchema);
