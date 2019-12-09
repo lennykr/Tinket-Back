@@ -5,4 +5,7 @@ const SkillSchema = mongoose.Schema({
     url: String
 });
 
-module.exports = mongoose.model('Skill', SkillSchema);
+module.exports = {
+    SkillsModel: mongoose.model('Skill', SkillSchema),
+    SkillSchema
+};
