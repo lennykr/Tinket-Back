@@ -33,27 +33,27 @@ class UserService {
         try{
             /**
              * Repository expected:
-             * 
+             *
              * userProfile {
              *  param: param,
              *  param: param,
              *  param: param,
              *  ...
              * }
-             * 
+             *
              * We were giving it:
-             * 
+             *
              * {
              *  param: param,
              *  param: param,
              *  param: param,
              *  ...
              * }
-             * 
+             *
              * Should work now ?
             */
             const newProfile = await UserRepository.update(id, {
-                userProfile: userProfile
+                userProfile
             });
         }
         catch (ex) {

@@ -33,16 +33,10 @@ module.exports = class UserController {
 
     async updateProfile(req, res) {
         try {
-            req.user.userProfile = {
+            promiseResponseHelper(req, res, UserService.updateProfile(req.user._id, {
                 displayName: req.body.displayName,
                 bio: req.body.bio,
                 experience: req.body.experience
-            }
-            const userProfile = req.user.userProfile;
-            promiseResponseHelper(req, res, UserService.updateProfile(req.user._id, {
-                displayName: userProfile.displayName,
-                bio: userProfile.bio,
-                experience: userProfile.experience
             }));
         }
         catch (ex) {
