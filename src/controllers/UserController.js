@@ -8,17 +8,12 @@ module.exports = class UserController {
     }
 
     async register(req, res) {
-        try {
-            res.status(200).send(await UserService.register({
-                email: req.body.email,
-                password: req.body.password,
-                firstname: req.body.firstname,
-                lastname: req.body.lastname
-            }));
-        }catch (ex) {
-            log(ex);
-            res.status(400).send(errorResponse('Registratie mislukt'));
-        }
+        promiseResponseHelper(req, res, UserService.register({
+            email: req.body.email,
+            password: req.body.password,
+            firstname: req.body.firstname,
+            lastname: req.body.firstname
+        }));
     }
 
     async getProfile(req, res) {

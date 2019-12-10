@@ -3,9 +3,15 @@ const {UserRepository} = require('../repositories/index');
 
 class UserService {
     async register(data) {
-        const user = await UserRepository.create(data);
-        user.password = null;
-        return user;
+        try {
+            const user = await UserRepository.create(data);
+            user.password = null;
+            return user;
+        }
+        catch(ex) {
+            throw new Error('Account bestaat al!');
+        }
+
     }
 
     async login(email, password) {
