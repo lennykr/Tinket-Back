@@ -1,23 +1,98 @@
 const mongoose = require('mongoose');
-const {SkillSchema} = require('./Skill');
+const validator = require('validator')
 const bcrypt = require("bcrypt");
 
-const UserSchema = mongoose.Schema({
-    nickname: String,
-    firstname: String,
-    lastname: String,
-    password: String,
-    dateOfBirth: Date,
-    skills: [SkillSchema],
-    bio: String,
-    experience: String,
+const profile = {
     contactInfo: {
         email: String,
         phoneNumber: String,
         linkedIn: String
     },
-    review: Number,
-    role: String,
+
+    location: {
+        country: String,
+        city: String,
+        street: String,
+        postalCode: String,
+    },
+
+    reviewScore: Number,
+};
+
+const UserSchema = mongoose.Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        validate: {
+            validator: value => validator.isEmail(value),
+            message: props => `${props.value} is not a valid email address!`
+        },
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    firstname: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    lastname: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+
+    userProfile: {
+        displayName: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        bio: {
+            type: String,
+            required: true,
+        },
+        experience: {
+            type: String,
+            required: true,
+        },
+        dateOfBirth: {
+            type: String,
+            required: true,
+        },
+        skills: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Skill',
+            required: true,
+        }],
+
+        ...profile,
+    },
+    
+    companyProfile: {
+        name: String,
+        bio: String,
+
+        ...profile,
+    },
+    
+    isAdmin: Boolean,
+
+    createdAt: {
+        type: Schema.Types.Date,
+        default: () => moment().format(),
+        required: true,
+    },
+
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 });
 
 /**
@@ -32,5 +107,3 @@ UserSchema.pre('save', async function (next) {
 
     next();
 });
-
-module.exports = mongoose.model('User', UserSchema);

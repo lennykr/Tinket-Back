@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 
 const SkillSchema = mongoose.Schema({
-    name: String,
-    url: String
+    name: {
+        Type: String,
+        Required: true,
+    },
+    url: {
+        Type: String,
+        Required: true,
+    }
 });
 
-module.exports = {
-    SkillsModel: mongoose.model('Skill', SkillSchema),
-    SkillSchema
-};
+module.exports = mongoose.model('Skill', SkillSchema);
