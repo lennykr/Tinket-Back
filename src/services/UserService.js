@@ -10,11 +10,10 @@ class UserService {
     async login(email, password) {
         try {
             const user = await UserRepository.findByCredentials(email, password);
-            console.log(user);
             return await user.generateAuthToken();
         }
         catch (ex) {
-            throw new Error(ex);
+            throw new Error('Ongeldige gegevens');
         }
     }
 

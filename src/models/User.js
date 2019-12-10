@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
+const validator = require('validator')
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
 const profile = {
@@ -48,37 +47,49 @@ const UserSchema = mongoose.Schema({
     },
 
     userProfile: {
-        displayName: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        bio: {
-            type: String,
-            required: true,
-        },
-        experience: {
-            type: String,
-            required: true,
-        },
-        dateOfBirth: {
-            type: Date,
-            required: true,
-        },
-        skills: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Skill',
-            required: true,
-        }],
+        type: {
+            displayName: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            bio: {
+                type: String,
+                required: true,
+            },
+            experience: {
+                type: String,
+                required: true,
+            },
+            dateOfBirth: {
+                type: String,
+                required: true,
+            },
+            skills: [{
+                type: Schema.Types.ObjectId,
+                ref: 'Skill',
+                required: true,
+            }],
 
-        ...profile,
+            ...profile,
+        },
+        required: false,
     },
 
     companyProfile: {
-        name: String,
-        bio: String,
+        type: {
+            name: {
+                type: String,
+                required: true,
+            },
+            description: {
+                type: String,
+                required: true,
+            },
 
-        ...profile,
+            ...profile,
+        },
+        required: false,
     },
 
     isAdmin: Boolean,

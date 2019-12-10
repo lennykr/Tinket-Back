@@ -5,16 +5,25 @@ const {UserService} = require('../services/index');
 module.exports = class UserController {
     async login(req, res) {
         try {
-            res.send(await UserService.login(req.body.email, req.body.password));
+            res.send({
+                token: await UserService.login(req.body.email, req.body.password)
+            });
         } catch (ex) {
+            console.log(ex);
             res.status(400).send(errorResponse(ex))
         }
     }
 
     async register(req, res) {
         try {
-            res.status(200).send(await UserService.register(req.body));
+            res.status(200).send(await UserService.register({
+                email: req.body.email,
+                password: req.body.password,
+                firstname: req.body.firstname,
+                lastname: req.body.lastname
+            }));
         }catch (ex) {
+            console.error(ex);
             res.status(400).send(errorResponse('Registratie mislukt'));
         }
     }
