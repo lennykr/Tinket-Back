@@ -102,8 +102,6 @@ const UserSchema = mongoose.Schema({
 
     onboardingCompletedAt: {
         type: Schema.Types.Date,
-        default: () => null,
-        required: false,
     },
 
     tokens: [{
