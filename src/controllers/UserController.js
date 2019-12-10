@@ -1,4 +1,4 @@
-const {errorResponse} = require("../helpers");
+const {log, errorResponse} = require("../helpers");
 const {UserRepository} = require('../repositories/index');
 const {UserService} = require('../services/index');
 
@@ -9,7 +9,7 @@ module.exports = class UserController {
                 token: await UserService.login(req.body.email, req.body.password)
             });
         } catch (ex) {
-            console.log(ex);
+            log(ex);
             res.status(400).send(errorResponse(ex))
         }
     }
@@ -23,7 +23,7 @@ module.exports = class UserController {
                 lastname: req.body.lastname
             }));
         }catch (ex) {
-            console.error(ex);
+            log(ex);
             res.status(400).send(errorResponse('Registratie mislukt'));
         }
     }
@@ -34,6 +34,7 @@ module.exports = class UserController {
             const user = await UserRepository.read(objectId);
             return res.status(200).send(user);
         }catch (ex) {
+            log(ex);
             res.status(400).send(errorResponse('User niet gevonden'));
         }
     }
