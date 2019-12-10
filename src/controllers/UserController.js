@@ -1,17 +1,12 @@
-const {log, errorResponse} = require("../helpers");
+const {log, errorResponse, promiseResponseHelper} = require("../helpers");
 const {UserRepository} = require('../repositories/index');
 const {UserService} = require('../services/index');
 
 module.exports = class UserController {
-    async login(req, res) {
-        try {
-            res.send({
-                token: await UserService.login(req.body.email, req.body.password)
-            });
-        } catch (ex) {
-            log(ex);
-            res.status(400).send(errorResponse(ex))
-        }
+    login(req, res) {
+        res.send({
+            token: promiseResponseHelper(UserService.login, [ req.body.email, req.body.password ]),
+        });
     }
 
     async register(req, res) {
