@@ -71,7 +71,6 @@ const UserSchema = mongoose.Schema({
                 ref: 'Skill',
                 required: true,
             }],
-
             ...profile,
         },
         required: false,
