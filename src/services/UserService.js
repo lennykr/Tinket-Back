@@ -1,3 +1,4 @@
+const {log} = require('../helpers');
 const {UserRepository} = require('../repositories/index');
 
 class UserService {
@@ -10,9 +11,13 @@ class UserService {
     async login(email, password) {
         try {
             const user = await UserRepository.findByCredentials(email, password);
-            return await user.generateAuthToken();
+            const token = await user.generateAuthToken();
+            return {
+                token
+            };
         }
         catch (ex) {
+            log(ex);
             throw new Error('Ongeldige gegevens');
         }
     }
