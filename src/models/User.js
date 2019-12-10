@@ -74,8 +74,14 @@ const UserSchema = mongoose.Schema({
     },
     
     companyProfile: {
-        name: String,
-        bio: String,
+        name: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+            required: true,
+        },
 
         ...profile,
     },
