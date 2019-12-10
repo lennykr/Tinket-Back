@@ -100,6 +100,12 @@ const UserSchema = mongoose.Schema({
         required: true,
     },
 
+    onboardingCompletedAt: {
+        type: Boolean,
+        default: () => false,
+        required: true,
+    },
+
     tokens: [{
         token: {
             type: String,
