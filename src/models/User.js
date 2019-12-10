@@ -47,43 +47,49 @@ const UserSchema = mongoose.Schema({
     },
 
     userProfile: {
-        displayName: {
-            type: String,
-            required: true,
-            trim: true,
+        type: {
+            displayName: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            bio: {
+                type: String,
+                required: true,
+            },
+            experience: {
+                type: String,
+                required: true,
+            },
+            dateOfBirth: {
+                type: String,
+                required: true,
+            },
+            skills: [{
+                type: Schema.Types.ObjectId,
+                ref: 'Skill',
+                required: true,
+            }],
+    
+            ...profile,
         },
-        bio: {
-            type: String,
-            required: true,
-        },
-        experience: {
-            type: String,
-            required: true,
-        },
-        dateOfBirth: {
-            type: String,
-            required: true,
-        },
-        skills: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Skill',
-            required: true,
-        }],
-
-        ...profile,
+        required: false,
     },
     
     companyProfile: {
-        name: {
-            type: String,
-            required: true,
-        },
-        description: {
-            type: String,
-            required: true,
-        },
+        type: {
+            name: {
+                type: String,
+                required: true,
+            },
+            description: {
+                type: String,
+                required: true,
+            },
 
-        ...profile,
+            ...profile,
+        },
+        required: false,
     },
     
     isAdmin: Boolean,
