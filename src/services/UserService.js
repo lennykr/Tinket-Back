@@ -28,6 +28,16 @@ class UserService {
         }
     }
 
+    async updateProfile(id, userProfile){
+        try{
+            const userProfile = await UserRepository.update(id, userProfile);
+        }
+        catch (ex) {
+            log (ex);
+            throw new Error('Update mislukt');
+        }
+    }
+
 }
 
 module.exports = UserService;

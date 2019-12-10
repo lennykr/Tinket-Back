@@ -31,7 +31,23 @@ module.exports = class UserController {
         // TODO
     }
 
-    async update(req, res) {
-        // TODO
+    async updateProfile(req, res) {
+        try {
+            req.user.userProfile = {
+                displayName: 'name',
+                bio: 'This is my bio',
+                experience: 'This is my experience'
+            }
+            const userProfile = req.user.userProfile;
+            promiseResponseHelper(req, res, UserService.updateProfile(req.user._id, {
+                displayName: userProfile.displayName,
+                bio: userProfile.bio,
+                experience: userProfile.experience
+            }));
+        }
+        catch (ex) {
+            console.error(ex);
+            res.status(400).send('Update mislukt');
+        }
     }
 };
