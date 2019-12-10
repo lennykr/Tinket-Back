@@ -24,7 +24,7 @@ app.use(express.static('public'));
 
 app.use(router);
 
-app.get('/', function (req, res, next) {
+app.get('/', function (req, res) {
     res.send(`API Version: ${ currentVersion }`);
 });
 

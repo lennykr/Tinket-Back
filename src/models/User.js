@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator')
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
 const profile = {
@@ -70,12 +71,11 @@ const UserSchema = mongoose.Schema({
                 ref: 'Skill',
                 required: true,
             }],
-    
             ...profile,
         },
         required: false,
     },
-    
+
     companyProfile: {
         type: {
             name: {
@@ -91,7 +91,7 @@ const UserSchema = mongoose.Schema({
         },
         required: false,
     },
-    
+
     isAdmin: Boolean,
 
     createdAt: {
@@ -120,3 +120,19 @@ UserSchema.pre('save', async function (next) {
 
     next();
 });
+
+/**
+ * Generates a new JWT for the user.
+ */
+UserSchema.methods.generateAuthToken = function() {
+    const user = this;
+    const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET);
+
+    user.tokens = user.tokens.concat({token});
+
+    return user.save().then(() => {
+        return token;
+    });
+};
+
+module.exports = mongoose.model('User', UserSchema);
