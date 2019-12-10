@@ -19,6 +19,7 @@ class UserService {
             const user = await UserRepository.findByCredentials(email, password);
             const token = await user.generateAuthToken();
             return {
+                user,
                 token
             };
         }
