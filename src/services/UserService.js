@@ -5,6 +5,7 @@ class UserService {
     async register(data) {
         try {
             const user = await UserRepository.create(data);
+            console.log(user);
             user.password = null;
             return user;
         }
@@ -30,7 +31,30 @@ class UserService {
 
     async updateProfile(id, userProfile){
         try{
-            const userProfile = await UserRepository.update(id, userProfile);
+            /**
+             * Repository expected:
+             * 
+             * userProfile {
+             *  param: param,
+             *  param: param,
+             *  param: param,
+             *  ...
+             * }
+             * 
+             * We were giving it:
+             * 
+             * {
+             *  param: param,
+             *  param: param,
+             *  param: param,
+             *  ...
+             * }
+             * 
+             * Should work now ?
+            */
+            const newProfile = await UserRepository.update(id, {
+                userProfile: userProfile
+            });
         }
         catch (ex) {
             log (ex);

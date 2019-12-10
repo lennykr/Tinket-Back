@@ -34,9 +34,9 @@ module.exports = class UserController {
     async updateProfile(req, res) {
         try {
             req.user.userProfile = {
-                displayName: 'name',
-                bio: 'This is my bio',
-                experience: 'This is my experience'
+                displayName: req.body.displayName,
+                bio: req.body.bio,
+                experience: req.body.experience
             }
             const userProfile = req.user.userProfile;
             promiseResponseHelper(req, res, UserService.updateProfile(req.user._id, {
