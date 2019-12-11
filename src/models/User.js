@@ -98,10 +98,6 @@ const UserSchema = mongoose.Schema({
         required: true,
     },
 
-    onboardingCompletedAt: {
-        type: Schema.Types.Date,
-    },
-
     tokens: {
         type: [{
             token: {
