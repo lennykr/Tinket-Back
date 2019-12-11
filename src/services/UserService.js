@@ -9,7 +9,7 @@ class UserService {
         }
         catch(ex) {
             log(ex);
-            throw new BadRequestError('Account bestaat al!');
+            throw new BadRequestError('Account gegevens niet beschikbaar.');
         }
     }
 
@@ -44,7 +44,7 @@ class UserService {
         }
         catch (ex) {
             log(ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het inloggen.');
+            throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
         }
     }
 
@@ -54,7 +54,7 @@ class UserService {
         }
         catch (ex) {
             log(ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het inloggen.');
+            throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
         }
     }
 }
