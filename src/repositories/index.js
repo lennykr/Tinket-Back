@@ -1,3 +1,4 @@
 module.exports = {
-    UserRepository:  new (require('./UserRepository'))()
+    UserRepository:  new (require('./UserRepository'))(),
+    AssignmentRepository:  new (require('./AssignmentRepository'))()
 };
