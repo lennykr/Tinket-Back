@@ -16,9 +16,9 @@ router.delete('/users/:id', UserController.delete);
 router.put('/users', auth, UserController.updateProfile);
 
 //Assignment Routes
-router.post('/assignments', AssignmentController.create)
-router.put('/assignments', AssignmentController.update)
-router.delete('/assignments', AssignmentController.delete)
-router.get('/assignments', AssignmentController.getAllAssignments)
+router.post('/assignments', AssignmentController.create.bind(AssignmentController));
+router.put('/assignments', AssignmentController.update.bind(AssignmentController));
+router.delete('/assignments', AssignmentController.delete);
+router.get('/assignments', AssignmentController.getAllAssignments);
 
 module.exports = router;

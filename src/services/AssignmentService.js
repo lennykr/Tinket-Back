@@ -12,26 +12,14 @@ class AssignmentService {
         }
     }
 
-    async update(id, assignment){
-        //Shorthand expression not working for some reason
-        /*if (!await AssignmentRepository.update(id, assignment));
-            throw new Error('Updaten van een assignment mislukt');*/
-        try{
-            await AssignmentRepository.update(id, assignment)
-        }
-        catch(ex){
+    async update(id, assignment) {
+        if (!await AssignmentRepository.update(id, assignment))
             throw new Error('Updaten van een assignment mislukt');
-        }
     }
 
     async delete(id){
-        try{
-            await AssignmentRepository.delete(id)
-        }
-        catch(ex){
-            throw new Error('Assignment niet gevonden!');
-        }
-            
+       if (!await AssignmentRepository.delete(id))
+           throw new Error('Assignment niet gevonden');
     }
 
     async getAll(){
