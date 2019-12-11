@@ -9,7 +9,7 @@ const sendSuccess = (req, res, data) => {
 };
 
 const sendError = (req, res, error) => {
-    res.status(500).send({
+    res.status(error.statusCode || 500).send({
         message: error.message
     });
 };
