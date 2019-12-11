@@ -18,8 +18,22 @@ module.exports = class UserController {
      * @param res 
      */
     updateMyMakerProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.updateMakerProfile(req.user._id, {
+        promiseResponseHelper(req, res, UserService.updateCompanyProfile(req.user._id, {
             displayName: req.body.displayName,
+            bio: req.body.bio,
+            experience: req.body.experience,
+            dateOfBirth: req.body.dateOfBirth,
+            skills: req.body.skills,
+            contactInfo: {
+                email: req.body.contactInfo.email,
+                phoneNumber: req.body.contactInfo.email,
+                linkedIn: req.body.contactInfo.linkedIn,
+            },
+            location: {
+                country: req.body.location.country,
+                city: req.body.location.city,
+                postalCode: req.body.location.postalCode,
+            },
         }));
     }
 
@@ -30,7 +44,18 @@ module.exports = class UserController {
      */
     updateMyCompanyProfile(req, res) {
         promiseResponseHelper(req, res, UserService.updateCompanyProfile(req.user._id, {
-            displayName: req.body.displayName,
+            name: req.body.name,
+            description: req.body.description,
+            contactInfo: {
+                email: req.body.contactInfo.email,
+                phoneNumber: req.body.contactInfo.email,
+                linkedIn: req.body.contactInfo.linkedIn,
+            },
+            location: {
+                country: req.body.location.country,
+                city: req.body.location.city,
+                postalCode: req.body.location.postalCode,
+            },
         }));
     }
 
