@@ -14,7 +14,6 @@ const profile = {
     location: {
         country: String,
         city: String,
-        street: String,
         postalCode: String,
     },
 };
