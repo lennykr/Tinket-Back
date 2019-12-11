@@ -3,17 +3,24 @@ const {UserRepository} = require('../repositories/index');
 const {BadRequestError, InternalServerError} = require('../exceptions');
 
 class UserService {
-    async register(data) {
+    async show(id) {
         try {
-            const user = await UserRepository.create(data);
-            console.log(user);
-            user.password = null;
-            return user;
+            return (await UserRepository.read(id));
         }
         catch(ex) {
+            log(ex);
             throw new BadRequestError('Account bestaat al!');
         }
+    }
 
+    async register(data) {
+        try {
+            return (await UserRepository.create(data));
+        }
+        catch(ex) {
+            log(ex);
+            throw new BadRequestError('Account bestaat al!');
+        }
     }
 
     async login(email, password) {
@@ -21,49 +28,15 @@ class UserService {
         try {
             const token = await user.generateAuthToken();
             return {
-                user,
+                user: await this.show(user._id),  // Pass the user object without password & token fields.
                 token
             };
         }
         catch (ex) {
             log(ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het inloggen');
+            throw new InternalServerError('Er is iets mis gegaan tijdens het inloggen.');
         }
     }
-
-    async updateProfile(id, userProfile){
-        try{
-            /**
-             * Repository expected:
-             *
-             * userProfile {
-             *  param: param,
-             *  param: param,
-             *  param: param,
-             *  ...
-             * }
-             *
-             * We were giving it:
-             *
-             * {
-             *  param: param,
-             *  param: param,
-             *  param: param,
-             *  ...
-             * }
-             *
-             * Should work now ?
-            */
-            const newProfile = await UserRepository.update(id, {
-                userProfile
-            });
-        }
-        catch (ex) {
-            log (ex);
-            throw new Error('Update mislukt');
-        }
-    }
-
 }
 
 module.exports = UserService;
