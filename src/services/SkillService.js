@@ -13,23 +13,13 @@ class SkillService {
     }
 
     async update(id, updatedSkill) {
-        try {
-            if (!await SkillRepository.update(id, updatedSkill))
-                throw new Error();
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het updaten van deze skill');
-        }
+        if (!await SkillRepository.update(id, updatedSkill))
+            throw new BadRequestError('Skill niet gevonden!');
     }
 
     async delete(id) {
-        try {
-            if (!await SkillRepository.delete(id))
-                throw new Error('Failed to delete ' + id);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het updaten van deze skill');
-        }
+        if (!await SkillRepository.delete(id))
+            throw new BadRequestError('Skill niet gevonden!');
     }
 
     async getAll() {
