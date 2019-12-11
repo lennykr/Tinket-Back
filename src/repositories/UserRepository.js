@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const BaseRepository = require('./BaseRepository');
 const bcrypt = require('bcrypt');
+const {BadRequestError} = require('../exceptions');
 
 class UserRepository extends BaseRepository {
     constructor() {super(User);}
@@ -8,8 +9,8 @@ class UserRepository extends BaseRepository {
     async findByCredentials(email, password) {
         const user = await User.findOne({email});
 
-        if (!await bcrypt.compare(password, user.password))
-            throw new Error('Onjuiste inloggegevens');
+        if (user == null || !await bcrypt.compare(password, user.password))
+            throw new BadRequestError('Email of wachtwoord onjuist!');
 
         return user;
     }

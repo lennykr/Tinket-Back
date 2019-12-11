@@ -1,5 +1,6 @@
 const {log} = require('../helpers');
 const {UserRepository} = require('../repositories/index');
+const {BadRequestError, InternalServerError} = require('../exceptions');
 
 class UserService {
     async register(data) {
@@ -9,14 +10,14 @@ class UserService {
             return user;
         }
         catch(ex) {
-            throw new Error('Account bestaat al!');
+            throw new BadRequestError('Account bestaat al!');
         }
 
     }
 
     async login(email, password) {
+        const user = await UserRepository.findByCredentials(email, password);
         try {
-            const user = await UserRepository.findByCredentials(email, password);
             const token = await user.generateAuthToken();
             return {
                 user,
@@ -25,7 +26,7 @@ class UserService {
         }
         catch (ex) {
             log(ex);
-            throw new Error('Ongeldige gegevens');
+            throw new InternalServerError('Er is iets mis gegaan tijdens het inloggen');
         }
     }
 
