@@ -14,7 +14,7 @@ const {
 router.post('/users/login', UserController.login);
 router.post('/users', UserController.register);
 router.get('/users/me', auth, UserController.showMe);
-router.put('/users/me/user-profile', auth, UserController.updateMyMakerProfile);
+router.put('/users/me/maker-profile', auth, UserController.updateMyMakerProfile);
 router.put('/users/me/company-profile', auth, UserController.updateMyCompanyProfile);
 
 module.exports = router;
