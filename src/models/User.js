@@ -14,11 +14,8 @@ const profile = {
     location: {
         country: String,
         city: String,
-        street: String,
         postalCode: String,
     },
-
-    reviewScore: Number,
 };
 
 const UserSchema = mongoose.Schema({
@@ -34,6 +31,7 @@ const UserSchema = mongoose.Schema({
     },
     password: {
         type: String,
+        select: false,
         required: true,
     },
     firstname: {
@@ -100,16 +98,15 @@ const UserSchema = mongoose.Schema({
         required: true,
     },
 
-    onboardingCompletedAt: {
-        type: Schema.Types.Date,
+    tokens: {
+        type: [{
+            token: {
+                type: String,
+                required: true
+            }
+        }],
+        select: false,
     },
-
-    tokens: [{
-        token: {
-            type: String,
-            required: true
-        }
-    }]
 });
 
 /**

@@ -2,19 +2,29 @@ const express = require('express');
 const router = express.Router();
 const auth = require('./middleware/auth');
 const company = require('./middleware/company');
-
-
+const admin = require('./middleware/admin');
 const {
     UserController,
-    AssignmentController
+    AssignmentController,
+    SkillController
 } = require('./controllers/index');
 
 //User routes
+
+/********************************/
+/*           Routes             */
+/********************************/
+
 router.post('/users/login', UserController.login);
 router.post('/users', UserController.register);
-router.get('/users/:id', UserController.getProfile);
-router.delete('/users/:id', UserController.delete);
-router.put('/users', auth, UserController.updateProfile);
+router.get('/users/me', auth, UserController.showMe);
+router.put('/users/me/maker-profile', auth, UserController.updateMyMakerProfile);
+router.put('/users/me/company-profile', auth, UserController.updateMyCompanyProfile);
+
+router.post('/skills', [auth, admin], SkillController.add.bind(SkillController));
+router.get('/skills', [auth], SkillController.getAllSkills);
+router.delete('/skills/:id', [auth, admin], SkillController.delete);
+router.put('/skills/:id', [auth, admin], SkillController.update.bind(SkillController));
 
 //Assignment Routes
 router.post('/assignments', [auth, company], AssignmentController.create.bind(AssignmentController));
