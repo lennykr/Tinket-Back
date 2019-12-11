@@ -15,7 +15,11 @@ class SkillController {
     }
 
     update(req, res) {
-        promiseResponseHelper(req, res, SkillService.update(req.params.name, this._toSkillPayload(req)));
+        promiseResponseHelper(req, res, SkillService.update(req.params.id, this._toSkillPayload(req)));
+    }
+
+    delete(req, res) {
+        promiseResponseHelper(req, res, SkillService.delete(req.params.id));
     }
 
     getAllSkills(req, res) {

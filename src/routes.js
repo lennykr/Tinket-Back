@@ -16,7 +16,8 @@ router.delete('/users/:id', UserController.delete);
 router.patch('/users/:id', UserController.update);
 
 router.post('/skills', [auth, admin], SkillController.add.bind(SkillController));
-router.get('/skills', [auth, admin], SkillController.getAllSkills);
-
+router.get('/skills', [auth], SkillController.getAllSkills);
+router.delete('/skills/:id', [auth, admin], SkillController.delete);
+router.put('/skills/:id', [auth, admin], SkillController.update.bind(SkillController));
 
 module.exports = router;
