@@ -8,12 +8,15 @@ const {
     SkillController
 } = require('./controllers/index');
 
+/********************************/
+/*           Routes             */
+/********************************/
 
 router.post('/users/login', UserController.login);
 router.post('/users', UserController.register);
-router.get('/users/:id', UserController.getProfile);
-router.delete('/users/:id', UserController.delete);
-router.patch('/users/:id', UserController.update);
+router.get('/users/me', auth, UserController.showMe);
+router.put('/users/me/maker-profile', auth, UserController.updateMyMakerProfile);
+router.put('/users/me/company-profile', auth, UserController.updateMyCompanyProfile);
 
 router.post('/skills', [auth, admin], SkillController.add.bind(SkillController));
 router.get('/skills', [auth], SkillController.getAllSkills);

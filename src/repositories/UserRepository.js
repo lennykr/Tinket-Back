@@ -7,7 +7,7 @@ class UserRepository extends BaseRepository {
     constructor() {super(User);}
 
     async findByCredentials(email, password) {
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).select(['+password', '+tokens']);
 
         if (user == null || !await bcrypt.compare(password, user.password))
             throw new BadRequestError('Email of wachtwoord onjuist!');
