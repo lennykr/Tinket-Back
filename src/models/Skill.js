@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 
 const SkillSchema = mongoose.Schema({
     name: {
-        Type: String,
-        Required: true,
+        type: String,
+        required: true,
+        unique: true
     },
     url: {
-        Type: String,
-        Required: true,
+        type: String,
+        required: true,
     }
 });
 
