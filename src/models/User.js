@@ -47,7 +47,7 @@ const UserSchema = mongoose.Schema({
         trim: true,
     },
 
-    userProfile: {
+    makerProfile: {
         type: {
             displayName: {
                 type: String,
@@ -63,7 +63,7 @@ const UserSchema = mongoose.Schema({
                 required: true,
             },
             dateOfBirth: {
-                type: String,
+                type: Date,
                 required: true,
             },
             skills: [{
