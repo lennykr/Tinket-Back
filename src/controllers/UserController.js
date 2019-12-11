@@ -18,7 +18,7 @@ module.exports = class UserController {
      * @param res 
      */
     updateMyMakerProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.updateCompanyProfile(req.user._id, {
+        promiseResponseHelper(req, res, UserService.updateMakerProfile(req.user._id, {
             displayName: req.body.displayName,
             bio: req.body.bio,
             experience: req.body.experience,

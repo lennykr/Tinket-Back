@@ -28,9 +28,29 @@ class UserService {
         try {
             const token = await user.generateAuthToken();
             return {
-                user: await this.show(user._id),  // Pass the user object without password & token fields.
+                user: await UserRepository.read(user._id),  // Pass the user object without password & token fields.
                 token
             };
+        }
+        catch (ex) {
+            log(ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het inloggen.');
+        }
+    }
+
+    async updateMakerProfile(id, makerProfile) {
+        try {
+            await UserRepository.update(id, {  makerProfile });
+        }
+        catch (ex) {
+            log(ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het inloggen.');
+        }
+    }
+
+    async updateCompanyProfile(id, companyProfile) {
+        try {
+            await UserRepository.update(id, {  companyProfile });
         }
         catch (ex) {
             log(ex);
