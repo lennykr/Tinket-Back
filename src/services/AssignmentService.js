@@ -4,10 +4,7 @@ const {AssignmentRepository} = require('../repositories/index');
 class AssignmentService {
     async create(data) {
         try {
-            console.log(data);
-            const assignment = await AssignmentRepository.create(data);
-            console.log(assignment);
-            return assignment;
+            return await AssignmentRepository.create(data);
         }
         catch(ex) {
             log (ex);
@@ -16,12 +13,21 @@ class AssignmentService {
     }
 
     async update(id, assignment){
+            if (!await AssignmentRepository.update(id, assignment));
+                throw new Error('Updaten van een assignment mislukt');
+    }
+
+    async delete(id){
+        if (!await AssignmentRepository.delete(id))
+            throw new Error('Assignment niet gevonden!');
+    }
+
+    async getAll(){
         try{
-            const newAssignment = await AssignmentRepository.update(id, assignment);
-        }
-        catch (ex) {
+            return await AssignmentRepository.readAll();
+        }catch (ex) {
             log (ex);
-            throw new Error('Updaten van een assignment mislukt');
+            throw new Error('Ophalen van alle assignments is mislukt');
         }
     }
 }
