@@ -57,7 +57,7 @@ class UserService {
 
     async updateSkills(id, skills) {
         try {
-            await UserRepository.update(id, {makerProfile: {skills}});
+            await UserRepository.update(id, {'makerProfile.skills': skills});
         }
         catch (ex) {
             log(ex);
