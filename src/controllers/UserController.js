@@ -101,7 +101,7 @@ module.exports = class UserController {
      * @param res
      */
     updateMySkills(req, res) {
-        promiseResponseHelper(req, res, UserService.updateSkills(req.user._id, req.body.skills));
+        promiseResponseHelper(req, res, UserService.updateSkills(req.user._id, req.body));
     }
 
     /**
