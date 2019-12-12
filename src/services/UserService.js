@@ -38,6 +38,22 @@ class UserService {
         }
     }
 
+    /**
+     * Update whole profile
+     * @param id
+     * @param makerProfile
+     * @return {Promise<void>}
+     */
+    async update(id, profile) {
+        try {
+            await UserRepository.update(id, profile);
+        }
+        catch (ex) {
+            log(ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
+        }
+    }
+
     async updateMakerProfile(id, makerProfile) {
         try {
             await UserRepository.update(id, {  makerProfile });

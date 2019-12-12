@@ -5,45 +5,21 @@ const {UserService} = require('../services/index');
 module.exports = class UserController {
     /**
      * Show the currently logged in user.
-     * @param req 
-     * @param res 
+     * @param req
+     * @param res
      */
     showMe(req, res) {
         promiseResponseHelper(req, res, UserService.show(req.user._id));
     }
 
     /**
-     * Update the maker profile section of the currently logged in user.
-     * @param req 
-     * @param res 
+     * Build company profile object from a request
+     * @param req
+     * @return {{contactInfo: {phoneNumber: *, linkedIn: *, email: *}, name: *, description: string | companyProfile.type.description | {type, required} | description, location: {country: (location.country|{type, required}|string), city: (location.city|{type, required}|string), postalCode: (location.postalCode|{type, required}|string)}}}
+     * @private
      */
-    updateMyMakerProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.updateMakerProfile(req.user._id, {
-            displayName: req.body.displayName,
-            bio: req.body.bio,
-            experience: req.body.experience,
-            dateOfBirth: req.body.dateOfBirth,
-            skills: req.body.skills,
-            contactInfo: {
-                email: req.body.contactInfo.email,
-                phoneNumber: req.body.contactInfo.email,
-                linkedIn: req.body.contactInfo.linkedIn,
-            },
-            location: {
-                country: req.body.location.country,
-                city: req.body.location.city,
-                postalCode: req.body.location.postalCode,
-            },
-        }));
-    }
-
-    /**
-     * Update the company profile section of the currently logged in user.
-     * @param req 
-     * @param res 
-     */
-    updateMyCompanyProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.updateCompanyProfile(req.user._id, {
+    _getCompanyProfile(req) {
+        return {
             name: req.body.name,
             description: req.body.description,
             contactInfo: {
@@ -56,13 +32,73 @@ module.exports = class UserController {
                 city: req.body.location.city,
                 postalCode: req.body.location.postalCode,
             },
+        };
+    }
+
+    /**
+     * Build maker profile object from a request
+     * @param req
+     * @return {{skills: *, contactInfo: {phoneNumber: string, linkedIn: *, email: *}, displayName: (makerProfile.type.displayName|{trim, type, required}|string), bio: (makerProfile.type.bio|{type, required}), dateOfBirth: (makerProfile.type.dateOfBirth|{type, required}), location: {country: (location.country|{type, required}|string), city: (location.city|{type, required}|string), postalCode: (location.postalCode|{type, required}|string)}, experience: (makerProfile.type.experience|{type, required})}}
+     * @private
+     */
+    _getMakerProfile(req) {
+        return {
+            displayName: req.body.displayName,
+            bio: req.body.bio,
+            experience: req.body.experience,
+            dateOfBirth: req.body.dateOfBirth,
+            skills: req.body.skills,
+            contactInfo: {
+                email: req.body.contactInfo.email,
+                phoneNumber: req.body.contactInfo.phone,
+                linkedIn: req.body.contactInfo.linkedIn,
+            },
+            location: {
+                country: req.body.location.country,
+                city: req.body.location.city,
+                postalCode: req.body.location.postalCode,
+            },
+        }
+    }
+
+    /**
+     * Update the maker profile section of the currently logged in user.
+     * @param req
+     * @param res
+     */
+    updateMyMakerProfile(req, res) {
+        promiseResponseHelper(req, res, UserService.updateMakerProfile(req.user._id, this._getMakerProfile(req)));
+    }
+
+    /**
+     * Update the company profile section of the currently logged in user.
+     * @param req
+     * @param res
+     */
+    updateMyCompanyProfile(req, res) {
+        promiseResponseHelper(req, res, UserService.updateCompanyProfile(req.user._id, this._getCompanyProfile(req)));
+    }
+
+    /**
+     * Update whole profile
+     * @param req
+     * @param res
+     */
+    updateMyProfile(req, res) {
+        promiseResponseHelper(req, res, UserService.update(req.user._id, {
+            email: req.body.email,
+            password: req.body.password,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            makerProfile: req.body.makerProfile != null ? this._getMakerProfile({body: req.body.makerProfile}) : null,
+            companyProfile: req.body.companyProfile != null ? this._getCompanyProfile({body: req.body.companyProfile}) : null
         }));
     }
 
     /**
      * Perform a user login.
-     * @param req 
-     * @param res 
+     * @param req
+     * @param res
      */
     login(req, res) {
         promiseResponseHelper(req, res, UserService.login(req.body.email, req.body.password));
@@ -70,8 +106,8 @@ module.exports = class UserController {
 
     /**
      * Register a user (without a profile).
-     * @param req 
-     * @param res 
+     * @param req
+     * @param res
      */
     register(req, res) {
         promiseResponseHelper(req, res, UserService.register({

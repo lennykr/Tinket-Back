@@ -109,6 +109,8 @@ const UserSchema = mongoose.Schema({
     },
 });
 
+const hash = (password) => bcrypt.hash(password, 8);
+
 /**
  * Hash the password before saving the user model
  */
@@ -116,9 +118,19 @@ UserSchema.pre('save', async function (next) {
     const user = this;
 
     if (user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 8);
+        user.password = await hash(user.password);
     }
 
+    next();
+});
+
+/**
+ * Re-hash password when updating the model
+ */
+UserSchema.pre('updateOne', async function (next) {
+    let newPassword = this._update['$set'].password;
+    if (newPassword != null)
+        this._update['$set'].password = await hash(newPassword);
     next();
 });
 
