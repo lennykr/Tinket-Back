@@ -49,6 +49,13 @@ const AssignmentSchema = mongoose.Schema({
             required: true,
         }
     }],
+    open: {
+        type: Boolean,
+        required: true
+    },
+    archivedAt: {
+        type: Date
+    },
 });
 
 module.exports = mongoose.model('Assignment', AssignmentSchema);
