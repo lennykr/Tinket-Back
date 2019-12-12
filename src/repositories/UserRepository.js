@@ -8,8 +8,7 @@ class UserRepository extends BaseRepository {
 
     async read(objectId) {
         const document = await this.model.findById(objectId)
-            .populate('makerProfile.skills')
-            .populate('companyProfile.skills');
+            .populate({ path: 'makerProfile.skills', model: 'Skill'});
         if (document == null)
             throw new Error(`Document with ObjectId ${objectId} not found`);
         return document;
