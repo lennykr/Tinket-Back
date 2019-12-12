@@ -6,6 +6,16 @@ const {BadRequestError} = require('../exceptions');
 class UserRepository extends BaseRepository {
     constructor() {super(User);}
 
+    async read(objectId) {
+        console.log("test")
+        const document = await this.model.findById(objectId)
+            .populate('makerProfile.skills')
+            .populate('companyProfile.skills');
+        if (document == null)
+            throw new Error(`Document with ObjectId ${objectId} not found`);
+        return document;
+    }
+
     async findByCredentials(email, password) {
         const user = await User.findOne({email}).select(['+password', '+tokens']);
 
