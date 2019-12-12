@@ -7,7 +7,6 @@ class UserRepository extends BaseRepository {
     constructor() {super(User);}
 
     async read(objectId) {
-        console.log("test")
         const document = await this.model.findById(objectId)
             .populate('makerProfile.skills')
             .populate('companyProfile.skills');
