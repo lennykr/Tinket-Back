@@ -15,7 +15,7 @@ const {
 
 // User routes
 router.post('/users/login', UserController.login);
-router.post('/users', UserController.register);
+router.post('/users', UserController.register.bind(UserController));
 router.get('/users/me', auth, UserController.showMe);
 router.put('/users/me/maker-profile', auth, UserController.updateMyMakerProfile.bind(UserController));
 router.put('/users/me/company-profile', auth, UserController.updateMyCompanyProfile.bind(UserController));

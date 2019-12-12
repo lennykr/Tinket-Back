@@ -15,7 +15,8 @@ class UserService {
 
     async register(data) {
         try {
-            return (await UserRepository.create(data));
+            await UserRepository.create(data);
+            return this.login(data.email, data.password);
         }
         catch(ex) {
             log(ex);
