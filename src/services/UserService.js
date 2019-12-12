@@ -55,6 +55,16 @@ class UserService {
         }
     }
 
+    async updateSkills(id, skills) {
+        try {
+            await UserRepository.update(id, {makerProfile: {skills}});
+        }
+        catch (ex) {
+            log(ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je skills.');
+        }
+    }
+
     async updateMakerProfile(id, makerProfile) {
         try {
             await UserRepository.update(id, {  makerProfile });

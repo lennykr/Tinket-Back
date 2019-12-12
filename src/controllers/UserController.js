@@ -96,6 +96,15 @@ module.exports = class UserController {
     }
 
     /**
+     * Update the skills of the currently logged in user.
+     * @param req
+     * @param res
+     */
+    updateMySkills(req, res) {
+        promiseResponseHelper(req, res, UserService.updateSkills(req.user._id, req.body.skills));
+    }
+
+    /**
      * Perform a user login.
      * @param req
      * @param res
