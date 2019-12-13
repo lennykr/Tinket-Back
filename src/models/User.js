@@ -96,6 +96,10 @@ const UserSchema = mongoose.Schema({
                 type: Boolean,
                 default: true
             },
+            reviewedBy: {
+                type: Schema.Types.ObjectId,
+                required: false  
+            },
             description: String,
             score: {
                 type: Number,

@@ -76,6 +76,8 @@ module.exports = class UserController {
      * @param res
      */
     addReview(req, res){
+        if(req.body.review.anonymous == false)
+            req.body.review.reviewedBy = req.user._id;
         promiseResponseHelper(req, res, UserService.addReview(req.body._id, req.body.review));
     }
 
