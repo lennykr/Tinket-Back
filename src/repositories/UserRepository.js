@@ -34,13 +34,11 @@ class UserRepository extends BaseRepository {
     }
 
     async deleteReview(userId, reviewId){
-        const review = await this.model.find({_id: userId});
-        console.log(review);
-        console.log(review.reviews);
-        //const result = await this.model.update({ _id: userId}, { $pull: {reviews: reviewId} });
-        //return result.n > 0;
+        const result = await this.model.update({ _id: userId}, { $pull: {reviews: {_id: reviewId}} });
+        return result.n > 0;
     }
 
+    //This function is doodoo but it works
     async readReviews(id){
         const reviews = await this.model.findById(id);
         return reviews.reviews;
