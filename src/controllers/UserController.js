@@ -189,6 +189,12 @@ module.exports = class UserController {
      * @param res
      */
     createAdmin(req, res) {
-
+        promiseResponseHelper(req, res, UserService.register({
+            email: req.body.email,
+            password: req.body.password,
+            firstname: req.body.firstname,
+            lastname: req.body.firstname,
+            isAdmin: true
+        }));
     }
 };
