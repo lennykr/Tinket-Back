@@ -133,6 +133,21 @@ class UserService {
             throw new InternalServerError('Er is iets fout gegaan bij het updaten van je password');
         }
     }
+
+    /**
+     * @param exclAdmins boolean whether or not to exclude admins from the resultset
+     * @return {Promise<void>}
+     */
+    async getAllUsers(exclAdmins = true) {
+        try{
+            const filter = exclAdmins ? [{isAdmin: null}, {isAdmin: false}] : [{}];
+            return await UserRepository.readAll({$or: filter});
+        }
+        catch (ex){
+            log (ex);
+            throw new InternalServerError('Er is iets mis gegaan bij het ophalen van alle users.');
+        }
+    }
 }
 
 module.exports = UserService;

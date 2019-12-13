@@ -155,4 +155,13 @@ module.exports = class UserController {
             req.body.newPassword
         ));
     }
+
+    /**
+     * (Admin) get all registered users
+     * @param req
+     * @param res
+     */
+    getAllUsers(req, res) {
+        promiseResponseHelper(req, res, UserService.getAllUsers());
+    }
 };

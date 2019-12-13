@@ -38,4 +38,9 @@ router.put('/assignments', [auth, company], AssignmentController.update.bind(Ass
 router.delete('/assignments', [auth, company], AssignmentController.delete);
 router.get('/assignments', [auth, company], AssignmentController.getAllAssignments);
 
+
+router.get('/users', [auth, admin], UserController.getAllUsers);
+
+
+
 module.exports = router;
