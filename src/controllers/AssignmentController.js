@@ -29,7 +29,7 @@ class AssignmentController {
     }
 
     delete(req, res) {
-        promiseResponseHelper(req, res, AssignmentService.delete(req.body._id));
+        promiseResponseHelper(req, res, AssignmentService.delete(req.body._id, req.user._id));
     }
 
     /**
