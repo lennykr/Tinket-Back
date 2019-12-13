@@ -126,4 +126,12 @@ module.exports = class UserController {
             lastname: req.body.firstname
         }));
     }
+
+    updateMyPassword(req, res) {
+        promiseResponseHelper(req, res, UserService.changePassword(
+            req.user._id,
+            req.body.password,
+            req.body.newPassword
+        ));
+    }
 };
