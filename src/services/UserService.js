@@ -88,7 +88,7 @@ class UserService {
 
     async readReviews(id){
         try{
-            await UserRepository.readReviews(id);
+            return await UserRepository.readReviews(id);
         }
         catch (ex){
             log (ex);
