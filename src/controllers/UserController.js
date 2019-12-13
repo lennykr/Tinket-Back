@@ -125,4 +125,8 @@ module.exports = class UserController {
             lastname: req.body.firstname
         }));
     }
+
+    clearMyTokens(req, res) {
+        promiseResponseHelper(req, res, UserService.deleteTokens(req.user._id));
+    }
 };

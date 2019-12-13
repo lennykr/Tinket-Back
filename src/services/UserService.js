@@ -84,6 +84,16 @@ class UserService {
             throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
         }
     }
+
+    async deleteTokens(id) {
+        try {
+           await UserRepository.update(id, {tokens: []});
+        }
+        catch (ex) {
+            log(ex);
+            throw new InternalServerError('Er is iets mis gegaan bij het verwijderen van je tokens.');
+        }
+    }
 }
 
 module.exports = UserService;

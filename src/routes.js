@@ -21,6 +21,7 @@ router.put('/users/me/maker-profile', auth, UserController.updateMyMakerProfile.
 router.put('/users/me/company-profile', auth, UserController.updateMyCompanyProfile.bind(UserController));
 router.put('/users/me/skills', auth, UserController.updateMySkills);
 router.put('/users/me', auth, UserController.updateMyProfile.bind(UserController));
+router.delete('/users/me/tokens', auth, UserController.clearMyTokens);
 
 // Skill routes
 router.post('/skills', [auth, admin], SkillController.add.bind(SkillController));
