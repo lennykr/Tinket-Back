@@ -16,7 +16,7 @@ const {
 // User routes
 router.post('/users/login', UserController.login);
 router.post('/users', UserController.register.bind(UserController));
-router.post('/users/review', auth, UserController.addReview);
+router.post('/users/review', auth, UserController.addReview.bind(UserController));
 router.delete('/users/review', [auth, admin], UserController.deleteReview);
 router.get('/users/me', auth, UserController.showMe);
 router.get('/users/me/reviews', auth, UserController.getReviews);

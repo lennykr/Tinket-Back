@@ -62,6 +62,20 @@ module.exports = class UserController {
     }
 
     /**
+     * Build _getReviewedBy object for non-anonymous reviews
+     * @param req
+     * @private
+     */
+    _getReviewedBy(req){
+        return{
+            reviewedById: req.user._id,
+            email: req.user.email,
+            firstname: req.user.firstname,
+            lastname: req.user.lastname
+        }
+    }
+
+    /**
      * Get 1 user's reviews.
      * @param req
      * @param res
@@ -77,7 +91,7 @@ module.exports = class UserController {
      */
     addReview(req, res){
         if(req.body.review.anonymous == false)
-            req.body.review.reviewedBy = req.user._id;
+            req.body.review.reviewedBy = this._getReviewedBy(req);
         promiseResponseHelper(req, res, UserService.addReview(req.body._id, req.body.review));
     }
 

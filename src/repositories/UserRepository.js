@@ -38,7 +38,6 @@ class UserRepository extends BaseRepository {
         return result.n > 0;
     }
 
-    //This function is doodoo but it works
     async readReviews(id){
         const reviews = await this.model.findById(id);
         return reviews.reviews;
