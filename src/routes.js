@@ -20,6 +20,7 @@ router.post('/users/review', auth, UserController.addReview.bind(UserController)
 router.delete('/users/review', [auth, admin], UserController.deleteReview);
 router.get('/users/me', auth, UserController.showMe);
 router.get('/users/me/reviews', auth, UserController.getReviews);
+router.get('/users/me/reviewsById', UserController.getReviewsById);
 router.put('/users/me/maker-profile', auth, UserController.updateMyMakerProfile.bind(UserController));
 router.put('/users/me/company-profile', auth, UserController.updateMyCompanyProfile.bind(UserController));
 router.put('/users/me/skills', auth, UserController.updateMySkills);

@@ -76,12 +76,21 @@ module.exports = class UserController {
     }
 
     /**
-     * Get 1 user's reviews.
+     * Get the logged in user's reviews.
      * @param req
      * @param res
      */
     getReviews(req, res){
         promiseResponseHelper(req, res, UserService.readReviews(req.user._id));
+    }
+
+    /**
+     * Get reviews based on user id.
+     * @param req
+     * @param res
+     */
+    getReviewsById(req, res){
+        promiseResponseHelper(req, res, UserService.readReviews(req.body._id));
     }
 
     /**
