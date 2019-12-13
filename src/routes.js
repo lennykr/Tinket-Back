@@ -40,7 +40,8 @@ router.get('/assignments', [auth, company], AssignmentController.getAllAssignmen
 
 
 router.get('/users', [auth, admin], UserController.getAllUsers);
-
+router.put('/users', [auth, admin], UserController.updateUser.bind(UserController));
+router.delete('/users', [auth, admin], UserController.deleteUser);
 
 
 module.exports = router;

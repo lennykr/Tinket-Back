@@ -115,6 +115,16 @@ class UserService {
         }
     }
 
+    async deleteUser(id) {
+        try {
+            await UserRepository.delete({_id: id});
+        }
+        catch (ex) {
+            log(ex);
+            throw new InternalServerError('Er is iets mis gegaan bij het verwijderen van deze user.');
+        }
+    }
+
     async changePassword(id, oldPassword, newPassword) {
         if (oldPassword == newPassword)
             throw new BadRequestError('Kies een ander wachtwoord');

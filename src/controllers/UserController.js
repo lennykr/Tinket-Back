@@ -164,4 +164,31 @@ module.exports = class UserController {
     getAllUsers(req, res) {
         promiseResponseHelper(req, res, UserService.getAllUsers());
     }
+
+    /**
+     * (Admin) update user
+     * @param req
+     * @param res
+     */
+    updateUser(req, res) {
+        promiseResponseHelper(req, res, UserService.update(req.body._id, req.body));
+    }
+
+    /**
+     * (Admin) delete user
+     * @param req
+     * @param res
+     */
+    deleteUser(req, res) {
+        promiseResponseHelper(req, res, UserService.deleteUser(req.body._id));
+    }
+
+    /**
+     * (Admin) add admin user account
+     * @param req
+     * @param res
+     */
+    createAdmin(req, res) {
+
+    }
 };
