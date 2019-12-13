@@ -50,7 +50,7 @@ module.exports = class UserController {
             skills: req.body.skills,
             contactInfo: {
                 email: req.body.contactInfo.email,
-                phoneNumber: req.body.contactInfo.phone,
+                phoneNumber: req.body.contactInfo.phoneNumber,
                 linkedIn: req.body.contactInfo.linkedIn,
             },
             location: {
