@@ -34,6 +34,10 @@ class AssignmentController {
     getAllAssignments(req, res) {
         promiseResponseHelper(req, res, AssignmentService.getAll());
     }
+
+    getMyAssignments() {
+        // TODO: get my assignments
+    }
 }
 
 module.exports = AssignmentController;
