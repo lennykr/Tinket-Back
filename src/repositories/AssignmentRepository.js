@@ -6,8 +6,8 @@ const BaseRepository = require('./BaseRepository');
 class AssignmentRepository extends BaseRepository {
     constructor() {super(Assignment);}
 
-    readAll() {
-        return this.model.find({}).populate('requiredSkills');
+    readAllWhere(conditions) {
+        return this.model.find(conditions).populate('requiredSkills');
     }
 }
 

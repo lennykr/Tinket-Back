@@ -22,9 +22,14 @@ class AssignmentService {
            throw new Error('Assignment niet gevonden');
     }
 
-    async getAll(){
+    /**
+     * Get all assignments from specified user (company) id
+     * @param id
+     * @return {Promise<void>}
+     */
+    async getAll(id){
         try{
-            return await AssignmentRepository.readAll();
+            return await AssignmentRepository.readAllWhere({createdBy: id});
         }catch (ex) {
             log (ex);
             throw new Error('Ophalen van alle assignments is mislukt');

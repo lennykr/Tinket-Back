@@ -15,7 +15,8 @@ class AssignmentController {
                 postalCode: req.body.location.postalCode
             },
             open: req.body.open,
-            archivedAt: req.body.archivedAt
+            archivedAt: req.body.archivedAt,
+            createdBy: req.user._id
         };
     }
 
@@ -31,12 +32,13 @@ class AssignmentController {
         promiseResponseHelper(req, res, AssignmentService.delete(req.body._id));
     }
 
-    getAllAssignments(req, res) {
-        promiseResponseHelper(req, res, AssignmentService.getAll());
-    }
-
-    getMyAssignments() {
-        // TODO: get my assignments
+    /**
+     * Get the assignments a company (the current user) has created
+     * @param req
+     * @param res
+     */
+    getMyAssignments(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.getAll(req.user._id));
     }
 }
 
