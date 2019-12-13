@@ -6,7 +6,7 @@ const {BadRequestError} = require('../exceptions');
 class UserRepository extends BaseRepository {
     constructor() {super(User);}
 
-    async read(objectId) {
+    async readWithSkills(objectId) {
         const document = await this.model.findById(objectId)
             .populate({ path: 'makerProfile.skills', model: 'Skill'});
         if (document == null)
@@ -21,6 +21,16 @@ class UserRepository extends BaseRepository {
             throw new BadRequestError('Email of wachtwoord onjuist!');
 
         return user;
+    }
+
+    async addReview(objectId, review) {
+        const result = await this.model.update({ _id: objectId}, { $push: {reviews: review} });
+        return result.n > 0;
+    }
+
+    async deleteReview(objectId){
+        const result = await this.model.deleteOne({reviews: {$pull: {_id: objectId}}});
+        return result.n > 0;
     }
 }
 

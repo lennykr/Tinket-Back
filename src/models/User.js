@@ -90,6 +90,20 @@ const UserSchema = mongoose.Schema({
         required: false,
     },
 
+    reviews: [
+        {
+            anonymous: {
+                type: Boolean,
+                default: true
+            },
+            description: String,
+            score: {
+                type: Number,
+                default: 0
+            }
+        }
+    ],
+
     isAdmin: Boolean,
 
     createdAt: {

@@ -5,7 +5,7 @@ const {BadRequestError, InternalServerError} = require('../exceptions');
 class UserService {
     async show(id) {
         try {
-            return (await UserRepository.read(id));
+            return (await UserRepository.readWithSkills(id));
         }
         catch(ex) {
             log(ex);
@@ -82,6 +82,26 @@ class UserService {
         catch (ex) {
             log(ex);
             throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
+        }
+    }
+
+    async addReview(id, review){
+        try{
+            await UserRepository.addReview(id, review);
+        }
+        catch (ex){
+            log (ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het toevoegen van een review.');
+        }
+    }
+
+    async deleteReview(id){
+        try{
+            await UserRepository.deleteReview(id);
+        }
+        catch (ex){
+            log (ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het verwijderen van een review.');
         }
     }
 }

@@ -62,6 +62,24 @@ module.exports = class UserController {
     }
 
     /**
+     * Add a review to a user.
+     * @param req
+     * @param res
+     */
+    addReview(req, res){
+        promiseResponseHelper(req, res, UserService.addReview(req.body._id, req.body.review));
+    }
+
+    /**
+     * Delete one review.
+     * @param req
+     * @param res
+     */
+    deleteReview(req, res){
+        promiseResponseHelper(req, res, UserService.deleteReview(req.body._id));
+    }
+
+    /**
      * Update the maker profile section of the currently logged in user.
      * @param req
      * @param res
