@@ -87,7 +87,6 @@ module.exports = class UserController {
     updateMyProfile(req, res) {
         promiseResponseHelper(req, res, UserService.update(req.user._id, {
             email: req.body.email,
-            password: req.body.password,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             makerProfile: req.body.makerProfile != null ? this._getMakerProfile({body: req.body.makerProfile}) : null,
