@@ -13,7 +13,9 @@ class AssignmentController {
                 city: req.body.location.city,
                 street: req.body.location.street,
                 postalCode: req.body.location.postalCode
-            }
+            },
+            open: req.body.open,
+            archivedAt: req.body.archivedAt
         };
     }
 

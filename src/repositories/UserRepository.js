@@ -14,6 +14,11 @@ class UserRepository extends BaseRepository {
         return document;
     }
 
+    async readPassword(id) {
+        return await User.findOne({_id: id})
+            .select('password');
+    }
+
     async findByCredentials(email, password) {
         const user = await User.findOne({email}).select(['+password', '+tokens']);
 
