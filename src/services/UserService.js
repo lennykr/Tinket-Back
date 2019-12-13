@@ -1,6 +1,7 @@
 const {log} = require('../helpers');
 const {UserRepository} = require('../repositories/index');
 const {BadRequestError, InternalServerError} = require('../exceptions');
+const {compare} = require('bcrypt');
 
 class UserService {
     async show(id) {
@@ -82,6 +83,25 @@ class UserService {
         catch (ex) {
             log(ex);
             throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
+        }
+    }
+
+    async changePassword(id, oldPassword, newPassword) {
+        if (oldPassword == newPassword)
+            throw new BadRequestError('Kies een ander wachtwoord');
+
+        // get user password
+        const user = await UserRepository.readPassword(id);
+
+        // compare stored password with old password
+        if (!await compare(oldPassword, user.password))
+            throw new BadRequestError('Onjuist wachtwoord!');
+
+        try {
+            UserRepository.update(id, {password: newPassword});
+        }
+        catch(ex) {
+            throw new InternalServerError('Er is iets fout gegaan bij het updaten van je password');
         }
     }
 }
