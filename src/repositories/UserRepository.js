@@ -34,8 +34,11 @@ class UserRepository extends BaseRepository {
     }
 
     async deleteReview(userId, reviewId){
-        const result = await this.model.reviews.pull({_id: reviewId});
-        return result.n > 0;
+        const review = await this.model.find({_id: userId});
+        console.log(review);
+        console.log(review.reviews);
+        //const result = await this.model.update({ _id: userId}, { $pull: {reviews: reviewId} });
+        //return result.n > 0;
     }
 }
 
