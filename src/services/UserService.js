@@ -95,9 +95,9 @@ class UserService {
         }
     }
 
-    async deleteReview(id){
+    async deleteReview(id, reviewId){
         try{
-            await UserRepository.deleteReview(id);
+            await UserRepository.deleteReview(id, reviewId);
         }
         catch (ex){
             log (ex);

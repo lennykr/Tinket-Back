@@ -76,7 +76,7 @@ module.exports = class UserController {
      * @param res
      */
     deleteReview(req, res){
-        promiseResponseHelper(req, res, UserService.deleteReview(req.body._id));
+        promiseResponseHelper(req, res, UserService.deleteReview(req.body._id, req.body.reviewId));
     }
 
     /**

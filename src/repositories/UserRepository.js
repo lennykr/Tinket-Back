@@ -28,8 +28,8 @@ class UserRepository extends BaseRepository {
         return result.n > 0;
     }
 
-    async deleteReview(objectId){
-        const result = await this.model.deleteOne({reviews: {$pull: {_id: objectId}}});
+    async deleteReview(userId, reviewId){
+        const result = await this.model.reviews.pull({_id: reviewId});
         return result.n > 0;
     }
 }
