@@ -129,4 +129,12 @@ module.exports = class UserController {
     clearMyTokens(req, res) {
         promiseResponseHelper(req, res, UserService.deleteTokens(req.user._id));
     }
+
+    updateMyPassword(req, res) {
+        promiseResponseHelper(req, res, UserService.changePassword(
+            req.user._id,
+            req.body.password,
+            req.body.newPassword
+        ));
+    }
 };
