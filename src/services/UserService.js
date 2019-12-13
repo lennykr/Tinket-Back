@@ -86,6 +86,16 @@ class UserService {
         }
     }
 
+    async readReviews(id){
+        try{
+            await UserRepository.readReviews(id);
+        }
+        catch (ex){
+            log (ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het ophalen van de reviews.');
+        }
+    }
+
     async addReview(id, review){
         try{
             await UserRepository.addReview(id, review);

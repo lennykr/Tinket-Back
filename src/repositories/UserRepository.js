@@ -40,6 +40,11 @@ class UserRepository extends BaseRepository {
         //const result = await this.model.update({ _id: userId}, { $pull: {reviews: reviewId} });
         //return result.n > 0;
     }
+
+    async readReviews(id){
+        const reviews = await this.model.findById(id);
+        return reviews.reviews;
+    }
 }
 
 module.exports = UserRepository;
