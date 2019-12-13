@@ -86,6 +86,16 @@ class UserService {
         }
     }
 
+    async deleteTokens(id) {
+        try {
+           await UserRepository.update(id, {tokens: []});
+        }
+        catch (ex) {
+            log(ex);
+            throw new InternalServerError('Er is iets mis gegaan bij het verwijderen van je tokens.');
+        }
+    }
+
     async changePassword(id, oldPassword, newPassword) {
         if (oldPassword == newPassword)
             throw new BadRequestError('Kies een ander wachtwoord');
