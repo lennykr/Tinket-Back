@@ -95,7 +95,7 @@ class UserService {
 
         // compare stored password with old password
         if (!await compare(oldPassword, user.password))
-            throw new BadRequestError('Invalid password!');
+            throw new BadRequestError('Onjuist wachtwoord!');
 
         try {
             UserRepository.update(id, {password: newPassword});
