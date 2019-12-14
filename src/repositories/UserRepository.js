@@ -34,14 +34,41 @@ class UserRepository extends BaseRepository {
     }
 
     async deleteReview(userId, reviewId){
-        const result = await this.model.update({ _id: userId}, { $pull: {reviews: {_id: reviewId}}});
+        const user = await this.model.findOne({ _id: userId});
+        for(let review in user.reviews){
+            if(user.reviews[review]._id == reviewId){
+                user.reviews[review].deletedAt = Date.now();
+            }
+        }
+        const result = await this.model.updateOne({ _id: userId}, {$set: user});
+        return result.n > 0;
+    }
+
+    async addReviewFlag(userId, reviewId){
+        const user = await this.model.findOne({ _id: userId});
+        for(let review in user.reviews){
+            if(user.reviews[review]._id == reviewId)
+            user.reviews[review].flaggedAt = Date.now();
+        }
+        const result = await this.model.updateOne({ _id: userId}, {$set: user});
+        return result.n > 0;
+    }
+
+    async deleteReviewFlag(userId, reviewId){
+        const user = await this.model.findOne({ _id: userId});
+        for(let review in user.reviews){
+            if(user.reviews[review]._id == reviewId){
+                user.reviews[review].flaggedAt = null;
+                user.reviews[review].flagSolvedAt = Date.now();
+            }
+        }
+        const result = await this.model.updateOne({ _id: userId}, {$set: user});
         return result.n > 0;
     }
 
     async readReviews(id){
         const user = await this.model.findById(id)
             .populate({ path: 'reviews.reviewedBy', model: 'User'});
-            console.log(user);
         return user.reviews;
     }
 

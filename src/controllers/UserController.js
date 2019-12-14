@@ -114,7 +114,25 @@ module.exports = class UserController {
     }
 
     /**
-     * Delete one review.
+     * Add a flag to a review.
+     * @param req
+     * @param res
+     */
+    addReviewFlag(req, res){
+        promiseResponseHelper(req, res, UserService.addReviewFlag(req.body._id, req.body.reviewId));
+    }
+
+    /**
+     * Delete a review's flag
+     * @param req
+     * @param res
+     */
+    deleteReviewFlag(req, res){
+        promiseResponseHelper(req, res, UserService.deleteReviewFlag(req.body._id, req.body.reviewId));
+    }
+
+    /**
+     * Delete one review by adding a date to deletedAt
      * @param req
      * @param res
      */

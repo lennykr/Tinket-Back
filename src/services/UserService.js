@@ -116,9 +116,30 @@ class UserService {
         }
     }
 
-    async deleteReview(id, reviewId){
+    async addReviewFlag(userId, reviewId){
         try{
-            await UserRepository.deleteReview(id, reviewId);
+            await UserRepository.addReviewFlag(userId, reviewId);
+        }
+        catch (ex) {
+            log (ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het flaggen van een review.');
+        }
+        
+    }
+
+    async deleteReviewFlag(userId, reviewId){
+        try{
+            await UserRepository.deleteReviewFlag(userId, reviewId);
+        }
+        catch (ex) {
+            log (ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het flaggen van een review.');
+        }
+    }
+
+    async deleteReview(userId, reviewId){
+        try{
+            await UserRepository.deleteReview(userId, reviewId);
         }
         catch (ex){
             log (ex);
