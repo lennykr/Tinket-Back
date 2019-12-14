@@ -9,7 +9,8 @@ const {
     UserController,
     AssignmentController,
     SkillController,
-    ReviewController
+    ReviewController,
+    ApplicationController
 } = require('./controllers/index');
 
 /********************************/
@@ -25,23 +26,20 @@ router.put('/users/:id', [auth, adminOrUser], UserController.update.bind(UserCon
 router.delete('/users/:id', [auth, adminOrUser], UserController.delete);
 router.put('/users/:id/skills', auth, UserController.updateMySkills);
 
-// -- Relationships --
 // GET /users/:id/skills (skillController#showForUser) Admin, Me as maker
 router.get('/users/:id/assignments', [auth, company, adminOrUser], AssignmentController.showForUser);
 router.get('/users/:id/reviews', auth, ReviewController.getUserReviews);
 // GET /users/:id/applications (applicationController#showForUser) Admin, Me as Maker
 // GET /assignments/:id/applications (applicationController#showForAssignment) Auth
 // POST /assignments/:id/applications (applicationController#showForAssignment) Me as maker
+router.post('/users/:id/applications', auth, ApplicationController.submit);
 
-
-// -- Other --
 router.put('/users/:id/maker-profile', [auth, adminOrUser], UserController.updateMyMakerProfile.bind(UserController));
 router.put('/users/:id/company-profile', [auth, adminOrUser], UserController.updateMyCompanyProfile.bind(UserController));
 router.put('/users/:id/password', [auth, adminOrUser], UserController.updateMyPassword);
 router.delete('/users/:id/tokens', [auth, adminOrUser], UserController.clearMyTokens);
 // Upload routes | A company representative can upload a video to an assignment.
 // Discover routes | A maker can discover assignments.
-router.post('/admins', [auth, admin], UserController.createAdmin);
 
 // -- Skills --
 router.get('/skills', [auth], SkillController.getAllSkills);
@@ -69,5 +67,13 @@ router.delete('/reviews/:id', auth, ReviewController.delete);
 // GET /applications/:id (applicationController#show) Auth
 // PUT /applications/:id (applicationController#update) Auth
 // DELETE /applications/:id (applicationController#destroy) Me as maker
+
+// -- Others --
+router.post('/admins', [auth, admin], UserController.createAdmin);
+
+// NOTES
+// TODO: resolve flagged reviews (admin)
+// TODO: flag a review (user)
+// TODO: rename idkanameforthis.js
 
 module.exports = router;
