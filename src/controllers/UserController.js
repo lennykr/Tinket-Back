@@ -249,13 +249,4 @@ module.exports = class UserController {
             isAdmin: true
         }));
     }
-
-    /**
-     * Update the maker profile section of the currently logged in user.
-     * @param req
-     * @param res
-     */
-    updateMyMakerProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.updateMakerProfile(req.params.id, req.user, this._getMakerProfile(req)));
-    }
 };
