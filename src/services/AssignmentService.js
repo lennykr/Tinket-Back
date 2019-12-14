@@ -13,7 +13,7 @@ class AssignmentService {
     }
 
     async update(id, assignment) {
-        if (!await AssignmentRepository.updateWhere({_id: id, createdBy: assignment.createdBy}, assignment))
+        if (!await AssignmentRepository.updateWhere({_id: id}, assignment))
             throw new Error('Updaten van een assignment mislukt');
     }
 
@@ -23,8 +23,8 @@ class AssignmentService {
      * @param creatorId creator od the assignment
      * @return {Promise<void>}
      */
-    async delete(id, creatorId){
-       if (!await AssignmentRepository.deleteOneWhere({_id: id, createdBy: creatorId}))
+    async delete(id){
+       if (!await AssignmentRepository.deleteOneWhere({_id: id}))
            throw new Error('Assignment niet gevonden');
     }
 

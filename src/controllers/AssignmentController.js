@@ -25,11 +25,11 @@ class AssignmentController {
     }
 
     update(req, res) {
-        promiseResponseHelper(req, res, AssignmentService.update(req.body._id, this._toAssignmentPayload(req)));
+        promiseResponseHelper(req, res, AssignmentService.update(req.params.id, this._toAssignmentPayload(req)));
     }
 
     delete(req, res) {
-        promiseResponseHelper(req, res, AssignmentService.delete(req.body._id, req.user._id));
+        promiseResponseHelper(req, res, AssignmentService.delete(req.params.id));
     }
 
     /**
@@ -37,8 +37,8 @@ class AssignmentController {
      * @param req
      * @param res
      */
-    getMyAssignments(req, res) {
-        promiseResponseHelper(req, res, AssignmentService.getAll(req.user._id));
+    showForUser(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.getAll(req.params.id));
     }
 }
 
