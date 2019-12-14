@@ -42,7 +42,7 @@ class ReviewService {
 
     async getReview(id) {
         try {
-            return await ReviewRepository.read(id);
+            return await ReviewRepository.readInclCreator(id);
         } catch (ex) {
             log(ex);
             throw new Error('Er is iets mis gegaan bij het ophalen van deze review');
