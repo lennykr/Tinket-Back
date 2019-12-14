@@ -54,7 +54,6 @@ router.delete('/skills/:id', [auth, admin], SkillController.delete);
 // GET /assignments (skillController#index) Admin
 router.post('/assignments', [auth, company], AssignmentController.create.bind(AssignmentController));
 router.get('/assignments/:id', auth, AssignmentController.show);
-// GET /assignments/:id (skillController#show) Auth
 router.put('/assignments/:id', [auth, adminOrCompany], AssignmentController.update.bind(AssignmentController));
 router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
 
