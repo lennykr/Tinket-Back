@@ -46,9 +46,15 @@ class UserService {
      * @param makerProfile
      * @return {Promise<void>}
      */
-    async update(id, profile) {
+    async update(user, profile) {
+        if (user.companyProfile && profile.makerProfile)
+            throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
+
+        if (user.makerProfile && profile.companyProfile)
+            throw new BadRequestError('Je hebt een bedrijfsaccount nodig om deze actie uit te voeren!');
+
         try {
-            await UserRepository.update(id, profile);
+            await UserRepository.update(user._id, profile);
         }
         catch (ex) {
             log(ex);
@@ -66,9 +72,12 @@ class UserService {
         }
     }
 
-    async updateMakerProfile(id, makerProfile) {
+    async updateMakerProfile(user, makerProfile) {
+        if (user.companyProfile != null)
+            throw new BadRequestError('Je hebt een bedrijfsaccount nodig om deze actie uit te voeren!');
+
         try {
-            await UserRepository.update(id, {  makerProfile });
+            await UserRepository.update(user._id, {  makerProfile });
         }
         catch (ex) {
             log(ex);
@@ -76,9 +85,12 @@ class UserService {
         }
     }
 
-    async updateCompanyProfile(id, companyProfile) {
+    async updateCompanyProfile(user, companyProfile) {
+        if (user.makerProfile != null)
+            throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
+
         try {
-            await UserRepository.update(id, {  companyProfile });
+            await UserRepository.update(user._id, {  companyProfile });
         }
         catch (ex) {
             log(ex);

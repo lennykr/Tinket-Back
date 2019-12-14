@@ -85,7 +85,7 @@ module.exports = class UserController {
      * @param res
      */
     updateMyMakerProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.updateMakerProfile(req.user._id, this._getMakerProfile(req)));
+        promiseResponseHelper(req, res, UserService.updateMakerProfile(req.user, this._getMakerProfile(req)));
     }
 
     /**
@@ -94,7 +94,7 @@ module.exports = class UserController {
      * @param res
      */
     updateMyCompanyProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.updateCompanyProfile(req.user._id, this._getCompanyProfile(req)));
+        promiseResponseHelper(req, res, UserService.updateCompanyProfile(req.user, this._getCompanyProfile(req)));
     }
 
     /**
@@ -103,7 +103,7 @@ module.exports = class UserController {
      * @param res
      */
     updateMyProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.update(req.user._id, {
+        promiseResponseHelper(req, res, UserService.update(req.user, {
             email: req.body.email,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
