@@ -8,8 +8,8 @@ module.exports = class UserController {
      * @param req
      * @param res
      */
-    showMe(req, res) {
-        promiseResponseHelper(req, res, UserService.show(req.user._id));
+    show(req, res) {
+        promiseResponseHelper(req, res, UserService.show(req.params.id));
     }
 
     /**
@@ -67,7 +67,7 @@ module.exports = class UserController {
      * @param res
      */
     addReview(req, res){
-        promiseResponseHelper(req, res, UserService.addReview(req.body._id, req.body.review));
+        promiseResponseHelper(req, res, UserService.addReview(req.params.id, req.body.review));
     }
 
     /**
@@ -76,7 +76,7 @@ module.exports = class UserController {
      * @param res
      */
     deleteReview(req, res){
-        promiseResponseHelper(req, res, UserService.deleteReview(req.body._id, req.body.reviewId));
+        promiseResponseHelper(req, res, UserService.deleteReview(req.params.id, req.body.reviewId));
     }
 
     /**
@@ -85,7 +85,7 @@ module.exports = class UserController {
      * @param res
      */
     updateMyMakerProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.updateMakerProfile(req.user, this._getMakerProfile(req)));
+        promiseResponseHelper(req, res, UserService.updateMakerProfile(req.params.id, req.user, this._getMakerProfile(req)));
     }
 
     /**
@@ -94,7 +94,7 @@ module.exports = class UserController {
      * @param res
      */
     updateMyCompanyProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.updateCompanyProfile(req.user, this._getCompanyProfile(req)));
+        promiseResponseHelper(req, res, UserService.updateCompanyProfile(req.params.id, req.user, this._getCompanyProfile(req)));
     }
 
     /**
@@ -102,23 +102,14 @@ module.exports = class UserController {
      * @param req
      * @param res
      */
-    updateMyProfile(req, res) {
-        promiseResponseHelper(req, res, UserService.update(req.user, {
+    update(req, res) {
+        promiseResponseHelper(req, res, UserService.update(req.params.id, req.user, req.user.isAdmin() ? req.body : {
             email: req.body.email,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             makerProfile: req.body.makerProfile != null ? this._getMakerProfile({body: req.body.makerProfile}) : null,
             companyProfile: req.body.companyProfile != null ? this._getCompanyProfile({body: req.body.companyProfile}) : null
         }));
-    }
-
-    /**
-     * Update the skills of the currently logged in user.
-     * @param req
-     * @param res
-     */
-    updateMySkills(req, res) {
-        promiseResponseHelper(req, res, UserService.updateSkills(req.user._id, req.body));
     }
 
     /**
@@ -145,12 +136,12 @@ module.exports = class UserController {
     }
 
     clearMyTokens(req, res) {
-        promiseResponseHelper(req, res, UserService.deleteTokens(req.user._id));
+        promiseResponseHelper(req, res, UserService.deleteTokens(req.params.id));
     }
 
     updateMyPassword(req, res) {
         promiseResponseHelper(req, res, UserService.changePassword(
-            req.user._id,
+            req.params.id,
             req.body.password,
             req.body.newPassword
         ));
@@ -179,8 +170,8 @@ module.exports = class UserController {
      * @param req
      * @param res
      */
-    deleteUser(req, res) {
-        promiseResponseHelper(req, res, UserService.deleteUser(req.body._id));
+    delete(req, res) {
+        promiseResponseHelper(req, res, UserService.deleteUser(req.params.id));
     }
 
     /**

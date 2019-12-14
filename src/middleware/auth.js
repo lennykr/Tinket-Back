@@ -12,6 +12,7 @@ module.exports = async (req, res, next) => {
             if (!user)
                 res.status(401).send({ message: 'Invalid token.' });
 
+            user.isAdmin = () => !!req.user.isAdmin;
             req.user = user;
             req.token = token;
 
