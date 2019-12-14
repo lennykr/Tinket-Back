@@ -3,20 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
-
-const profile = {
-    contactInfo: {
-        email: String,
-        phoneNumber: String,
-        linkedIn: String
-    },
-
-    location: {
-        country: String,
-        city: String,
-        postalCode: String,
-    },
-};
+const profile = require('./_profile');
 
 const UserSchema = mongoose.Schema({
     email: {
@@ -89,45 +76,6 @@ const UserSchema = mongoose.Schema({
         },
         required: false,
     },
-
-    reviews: [
-        {
-            anonymous: {
-                type: Boolean,
-                default: true
-            },
-            reviewedBy: {
-                type: Schema.Types.ObjectId,
-                ref: 'User',
-                required: true,
-            },
-            description: {
-                type: String,
-                required: true
-            },
-            score: {
-                type: Number,
-                default: 0,
-                max: 5,
-                required: true
-            },
-            flaggedAt: {
-                type: Date,
-                required: false,
-                default: null
-            },
-            flagSolvedAt: {
-                type: Date,
-                required: false,
-                default: null
-            },
-            deletedAt: {
-                type: Date,
-                required: false,
-                default: null
-            }
-        }
-    ],
 
     isAdmin: Boolean,
 

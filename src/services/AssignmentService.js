@@ -13,18 +13,29 @@ class AssignmentService {
     }
 
     async update(id, assignment) {
-        if (!await AssignmentRepository.update(id, assignment))
+        if (!await AssignmentRepository.updateWhere({_id: id}, assignment))
             throw new Error('Updaten van een assignment mislukt');
     }
 
+    /**
+     * Delete an assignment
+     * @param id assignment id
+     * @param creatorId creator od the assignment
+     * @return {Promise<void>}
+     */
     async delete(id){
-       if (!await AssignmentRepository.delete(id))
+       if (!await AssignmentRepository.deleteOneWhere({_id: id}))
            throw new Error('Assignment niet gevonden');
     }
 
-    async getAll(){
+    /**
+     * Get all assignments from specified user (company) id
+     * @param id
+     * @return {Promise<void>}
+     */
+    async getAll(id){
         try{
-            return await AssignmentRepository.readAll();
+            return await AssignmentRepository.readAllWhere({createdBy: id});
         }catch (ex) {
             log (ex);
             throw new Error('Ophalen van alle assignments is mislukt');

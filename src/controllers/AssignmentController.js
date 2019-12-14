@@ -15,7 +15,8 @@ class AssignmentController {
                 postalCode: req.body.location.postalCode
             },
             open: req.body.open,
-            archivedAt: req.body.archivedAt
+            archivedAt: req.body.archivedAt,
+            createdBy: req.user._id
         };
     }
 
@@ -24,15 +25,23 @@ class AssignmentController {
     }
 
     update(req, res) {
-        promiseResponseHelper(req, res, AssignmentService.update(req.body._id, this._toAssignmentPayload(req)));
+        promiseResponseHelper(req, res, AssignmentService.update(req.params.id, req.isAdmin ? req.body : this._toAssignmentPayload(req)));
     }
 
     delete(req, res) {
-        promiseResponseHelper(req, res, AssignmentService.delete(req.body._id));
+        promiseResponseHelper(req, res, AssignmentService.delete(req.params.id));
     }
 
-    getAllAssignments(req, res) {
-        promiseResponseHelper(req, res, AssignmentService.getAll());
+    /**
+     * Get the assignments a company (the current user) has created
+     * @param req
+     * @param res
+     */
+    showForUser(req, res) {
+        // TODO: user? -> get available assignments based on user skills
+        //       company? - > show my created assignments
+        //       admin? -> show assignments a company has created
+        promiseResponseHelper(req, res, AssignmentService.getAll(req.params.id));
     }
 }
 

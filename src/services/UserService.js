@@ -46,7 +46,13 @@ class UserService {
      * @param makerProfile
      * @return {Promise<void>}
      */
-    async update(id, profile) {
+    async update(id, user, profile) {
+        if (user.companyProfile && profile.makerProfile)
+            throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
+
+        if (user.makerProfile && profile.companyProfile)
+            throw new BadRequestError('Je hebt een bedrijfsaccount nodig om deze actie uit te voeren!');
+
         try {
             await UserRepository.update(id, profile);
         }
@@ -66,7 +72,10 @@ class UserService {
         }
     }
 
-    async updateMakerProfile(id, makerProfile) {
+    async updateMakerProfile(id, user, makerProfile) {
+        if (!user.isAdmin  && user.companyProfile != null)
+            throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
+
         try {
             await UserRepository.update(id, {  makerProfile });
         }
@@ -76,7 +85,10 @@ class UserService {
         }
     }
 
-    async updateCompanyProfile(id, companyProfile) {
+    async updateCompanyProfile(id, user, companyProfile) {
+        if (!user.isAdmin && user.makerProfile != null)
+            throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
+
         try {
             await UserRepository.update(id, {  companyProfile });
         }
@@ -156,6 +168,16 @@ class UserService {
         }
     }
 
+    async deleteUser(id) {
+        try {
+            await UserRepository.delete({_id: id});
+        }
+        catch (ex) {
+            log(ex);
+            throw new InternalServerError('Er is iets mis gegaan bij het verwijderen van deze user.');
+        }
+    }
+
     async changePassword(id, oldPassword, newPassword) {
         if (oldPassword == newPassword)
             throw new BadRequestError('Kies een ander wachtwoord');
@@ -172,6 +194,21 @@ class UserService {
         }
         catch(ex) {
             throw new InternalServerError('Er is iets fout gegaan bij het updaten van je password');
+        }
+    }
+
+    /**
+     * @param exclAdmins boolean whether or not to exclude admins from the resultset
+     * @return {Promise<void>}
+     */
+    async getAllUsers(exclAdmins = true) {
+        try{
+            const filter = exclAdmins ? [{isAdmin: null}, {isAdmin: false}] : [{}];
+            return await UserRepository.readAll({$or: filter});
+        }
+        catch (ex){
+            log (ex);
+            throw new InternalServerError('Er is iets mis gegaan bij het ophalen van alle users.');
         }
     }
 }
