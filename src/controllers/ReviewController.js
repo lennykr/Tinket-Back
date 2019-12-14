@@ -43,6 +43,10 @@ class ReviewController {
         promiseResponseHelper(req, res, ReviewService.getUserReviews(userId));
     }
 
+    getWrittenReviews(req, res) {
+        promiseResponseHelper(req, res, ReviewService.getWrittenReviews(req.params.id));
+    }
+
 }
 
 module.exports = ReviewController;

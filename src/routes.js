@@ -29,6 +29,7 @@ router.put('/users/:id/skills', auth, UserController.updateMySkills);
 // GET /users/:id/skills (skillController#showForUser) Admin, Me as maker
 router.get('/users/:id/assignments', [auth, company, validateAdminOrUserId], AssignmentController.showForUser);
 router.get('/users/:id/reviews', auth, ReviewController.getUserReviews);
+router.get('/users/:id/writtenReviews', auth, ReviewController.getWrittenReviews);
 // GET /users/:id/applications (applicationController#showForUser) Admin, Me as Maker
 // GET /assignments/:id/applications (applicationController#showForAssignment) Auth
 router.post('/users/:id/applications', auth, ApplicationController.submit);
@@ -63,6 +64,7 @@ router.delete('/reviews/:id', auth, ReviewController.delete);
 
 
 // -- Applications --
+// TODO: validation, security
 router.get('/applications/:id', auth, ApplicationController.show);
 router.put('/applications/:id', auth, ApplicationController.update);
 router.delete('/applications/:id', auth, ApplicationController.delete);

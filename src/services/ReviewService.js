@@ -67,6 +67,16 @@ class ReviewService {
         }
     }
 
+    async getWrittenReviews(userId) {
+        try {
+            return await ReviewRepository.findWrittenReviews(userId);
+        } catch (ex) {
+            log(ex);
+            throw new Error('Er is iets mis gegaan bij het ophalen van reviews');
+        }
+
+    }
+
 }
 
 module.exports = ReviewService;
