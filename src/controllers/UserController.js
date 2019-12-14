@@ -68,7 +68,7 @@ module.exports = class UserController {
      */
     _getReviewedBy(req){
         return{
-            reviewedById: req.user._id,
+            _id: req.user._id,
             email: req.user.email,
             firstname: req.user.firstname,
             lastname: req.user.lastname

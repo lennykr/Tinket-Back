@@ -97,29 +97,20 @@ const UserSchema = mongoose.Schema({
                 default: true
             },
             reviewedBy: {
-                reviewedById: {
-                    required: true,
-                    type: Schema.Types.ObjectId
-                },
-                email: {
-                    required: true,
-                    type: String
-                },
-                firstname: {
-                    required: true,
-                    type: String
-                },
-                lastname: {
-                    required: true,
-                    type: String
-                },
-                required: false
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true,
             },
-            description: String,
+            description: {
+                type: String,
+                required: true
+            },
             score: {
                 type: Number,
-                default: 0
-            }
+                default: 0,
+                max: 5,
+                required: true
+            },
         }
     ],
 
