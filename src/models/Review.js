@@ -22,7 +22,8 @@ const reviewSchema = mongoose.Schema({
     description: String,
     score: {
         type: Number,
-        default: 0
+        default: 0,
+        max: 5
     },
 
     ...moderate

@@ -8,7 +8,8 @@ const adminOrCompany = require('./middleware/companyOrAdmin');
 const {
     UserController,
     AssignmentController,
-    SkillController
+    SkillController,
+    ReviewController
 } = require('./controllers/index');
 
 /********************************/
@@ -59,26 +60,15 @@ router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
 
 
 // -- Reviews --
-// GET /reviews (reviewController#index) Admin
-// POST /reviews (reviewController#create) Auth
-// GET /reviews/:id (reviewController#show) Auth
-router.post('/reviews/:id', auth, UserController.addReview);
-// DELETE /reviews/:id (reviewController#destroy) Auth
-router.delete('/reviews/:id', auth, UserController.deleteReview);
+router.get('/reviews', [auth, admin], ReviewController.getAll);
+router.post('/reviews', auth, ReviewController.add);
+router.get('/reviews/:id', auth, ReviewController.get);
+router.delete('/reviews/:id', auth, ReviewController.delete);
 
 
 // -- Applications --
 // GET /applications/:id (applicationController#show) Auth
 // PUT /applications/:id (applicationController#update) Auth
 // DELETE /applications/:id (applicationController#destroy) Me as maker
-
-
-// TODO: add reviews routes
-/*
-router.delete('/users/review', [auth, admin], UserController.deleteReview);
-router.get('/users/allReviews', UserController.getAllReviews);
-router.get('/users/me/reviews', auth, UserController.getReviews);
-router.get('/users/me/reviewsById', UserController.getReviewsById);
-*/
 
 module.exports = router;

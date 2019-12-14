@@ -120,7 +120,7 @@ class UserService {
 
     async addReview(id, review){
         try{
-            await UserRepository.addReview(id, review);
+            await UserRepository.add(id, review);
         }
         catch (ex){
             log (ex);
@@ -136,7 +136,7 @@ class UserService {
             log (ex);
             throw new InternalServerError('Er is iets mis gegaan tijdens het flaggen van een review.');
         }
-        
+
     }
 
     async deleteReviewFlag(userId, reviewId){
