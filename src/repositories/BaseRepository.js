@@ -56,7 +56,6 @@ class BaseRepository {
         const result = await this.model.updateOne({ _id: objectId}, { $set: data });
         return result.n > 0;
     }
-
 }
 
 module.exports = BaseRepository;

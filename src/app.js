@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 const cors = require('cors');
+const { log } = require('./helpers');
 
 require('dotenv').config();
 
@@ -12,7 +13,6 @@ const { version: currentVersion } = require('../package.json');
 
 const app = express();
 const router = require('./routes');
-const port = 3000;
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -30,9 +30,9 @@ app.get('/', function (req, res) {
 
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true })
     .then(() => {
-        console.log('Connected to database!');
-        app.listen(port, () => {
-            console.log(`Listening on http://127.0.0.1:${port}`);
+        log('Connected to database!');
+        app.listen(process.env.PORT, () => {
+            log(`Listening on http://127.0.0.1:${process.env.PORT}`);
         });
     })
     .catch((err) => console.error(`Failed to connect to database. Error: ` + err));

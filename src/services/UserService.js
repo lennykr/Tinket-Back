@@ -1,11 +1,12 @@
 const {log} = require('../helpers');
 const {UserRepository} = require('../repositories/index');
 const {BadRequestError, InternalServerError} = require('../exceptions');
+const {compare} = require('bcrypt');
 
 class UserService {
     async show(id) {
         try {
-            return (await UserRepository.read(id));
+            return (await UserRepository.readWithSkills(id));
         }
         catch(ex) {
             log(ex);
@@ -45,9 +46,15 @@ class UserService {
      * @param makerProfile
      * @return {Promise<void>}
      */
-    async update(id, profile) {
+    async update(user, profile) {
+        if (user.companyProfile && profile.makerProfile)
+            throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
+
+        if (user.makerProfile && profile.companyProfile)
+            throw new BadRequestError('Je hebt een bedrijfsaccount nodig om deze actie uit te voeren!');
+
         try {
-            await UserRepository.update(id, profile);
+            await UserRepository.update(user._id, profile);
         }
         catch (ex) {
             log(ex);
@@ -65,9 +72,12 @@ class UserService {
         }
     }
 
-    async updateMakerProfile(id, makerProfile) {
+    async updateMakerProfile(user, makerProfile) {
+        if (user.companyProfile != null)
+            throw new BadRequestError('Je hebt een bedrijfsaccount nodig om deze actie uit te voeren!');
+
         try {
-            await UserRepository.update(id, {  makerProfile });
+            await UserRepository.update(user._id, {  makerProfile });
         }
         catch (ex) {
             log(ex);
@@ -75,13 +85,64 @@ class UserService {
         }
     }
 
-    async updateCompanyProfile(id, companyProfile) {
+    async updateCompanyProfile(user, companyProfile) {
+        if (user.makerProfile != null)
+            throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
+
         try {
-            await UserRepository.update(id, {  companyProfile });
+            await UserRepository.update(user._id, {  companyProfile });
         }
         catch (ex) {
             log(ex);
             throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
+        }
+    }
+
+    async addReview(id, review){
+        try{
+            await UserRepository.addReview(id, review);
+        }
+        catch (ex){
+            log (ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het toevoegen van een review.');
+        }
+    }
+
+    async deleteReview(id, reviewId){
+        try{
+            await UserRepository.deleteReview(id, reviewId);
+        }
+        catch (ex){
+            log (ex);
+            throw new InternalServerError('Er is iets mis gegaan tijdens het verwijderen van een review.');
+        }
+    }
+    async deleteTokens(id) {
+        try {
+           await UserRepository.update(id, {tokens: []});
+        }
+        catch (ex) {
+            log(ex);
+            throw new InternalServerError('Er is iets mis gegaan bij het verwijderen van je tokens.');
+        }
+    }
+
+    async changePassword(id, oldPassword, newPassword) {
+        if (oldPassword == newPassword)
+            throw new BadRequestError('Kies een ander wachtwoord');
+
+        // get user password
+        const user = await UserRepository.readPassword(id);
+
+        // compare stored password with old password
+        if (!await compare(oldPassword, user.password))
+            throw new BadRequestError('Onjuist wachtwoord!');
+
+        try {
+            UserRepository.update(id, {password: newPassword});
+        }
+        catch(ex) {
+            throw new InternalServerError('Er is iets fout gegaan bij het updaten van je password');
         }
     }
 }
