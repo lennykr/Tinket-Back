@@ -65,7 +65,7 @@ router.delete('/reviews/:id', auth, ReviewController.delete);
 // -- Applications --
 // GET /applications/:id (applicationController#show) Auth
 // PUT /applications/:id (applicationController#update) Auth
-// DELETE /applications/:id (applicationController#destroy) Me as maker
+router.delete('/applications/:id', auth, ApplicationController.delete);
 
 // -- Others --
 router.post('/admins', [auth, admin], UserController.createAdmin);

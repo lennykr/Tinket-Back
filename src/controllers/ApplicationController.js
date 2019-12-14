@@ -14,6 +14,10 @@ class ApplicationController {
             assignment: req.body.assignment
         }));
     }
+
+    delete(req, res) {
+        promiseResponseHelper(req, res, ApplicationService.delete(req.params.id));
+    }
 }
 
 module.exports = ApplicationController;

@@ -14,7 +14,16 @@ class ApplicationService {
             return await ApplicationRepository.create(application);
         } catch (ex) {
             log(ex);
-            throw new Error('Ophalen van een assignment is mislukt');
+            throw new Error('Toevoegen van een application is mislukt');
+        }
+    }
+
+    async delete(id) {
+        try {
+            await ApplicationRepository.delete(id);
+        } catch (ex) {
+            log(ex);
+            throw new Error('Verwijderen van een application is mislukt');
         }
     }
 }
