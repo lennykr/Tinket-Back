@@ -249,4 +249,13 @@ module.exports = class UserController {
             isAdmin: true
         }));
     }
+
+    /**
+     * Update the skills of the currently logged in user.
+     * @param req
+     * @param res
+     */
+    updateMySkills(req, res) {
+        promiseResponseHelper(req, res, UserService.updateSkills(req.params.id, req.body));
+    }
 };
