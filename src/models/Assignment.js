@@ -44,6 +44,11 @@ const AssignmentSchema = mongoose.Schema({
     archivedAt: {
         type: Date
     },
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    }
 });
 
 module.exports = mongoose.model('Assignment', AssignmentSchema);
