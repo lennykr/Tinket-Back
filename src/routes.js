@@ -46,7 +46,6 @@ router.post('/admins', [auth, admin], UserController.createAdmin);
 // -- Skills --
 router.get('/skills', [auth], SkillController.getAllSkills);
 router.post('/skills', [auth, admin], SkillController.add.bind(SkillController));
-//  GET /skills/:id (skillController#show) Admin
 router.put('/skills/:id', [auth, admin], SkillController.update.bind(SkillController));
 router.delete('/skills/:id', [auth, admin], SkillController.delete);
 
