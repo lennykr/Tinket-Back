@@ -73,7 +73,7 @@ class UserService {
     }
 
     async updateMakerProfile(id, user, makerProfile) {
-        if (!user.isAdmin()  && user.companyProfile != null)
+        if (!user.isAdmin  && user.companyProfile != null)
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
         try {
@@ -86,7 +86,7 @@ class UserService {
     }
 
     async updateCompanyProfile(id, user, companyProfile) {
-        if (!user.isAdmin() && user.makerProfile != null)
+        if (!user.isAdmin && user.makerProfile != null)
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
         try {

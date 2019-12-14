@@ -103,7 +103,7 @@ module.exports = class UserController {
      * @param res
      */
     update(req, res) {
-        promiseResponseHelper(req, res, UserService.update(req.params.id, req.user, req.user.isAdmin() ? req.body : {
+        promiseResponseHelper(req, res, UserService.update(req.params.id, req.user, req.user.isAdmin ? req.body : {
             email: req.body.email,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
