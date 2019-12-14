@@ -72,4 +72,12 @@ router.delete('/reviews/:id', auth, UserController.deleteReview);
 // DELETE /applications/:id (applicationController#destroy) Me as maker
 
 
+// TODO: add reviews routes
+/*
+router.delete('/users/review', [auth, admin], UserController.deleteReview);
+router.get('/users/allReviews', UserController.getAllReviews);
+router.get('/users/me/reviews', auth, UserController.getReviews);
+router.get('/users/me/reviewsById', UserController.getReviewsById);
+*/
+
 module.exports = router;

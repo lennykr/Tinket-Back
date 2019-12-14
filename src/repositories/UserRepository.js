@@ -33,13 +33,32 @@ class UserRepository extends BaseRepository {
     }
 
     async addReview(objectId, review) {
-        const result = await this.model.update({ _id: objectId}, { $push: {reviews: review} });
+        const result = await this.model.update({ _id: objectId}, { $push: {reviews: review}});
         return result.n > 0;
     }
 
     async deleteReview(userId, reviewId){
-        const result = await this.model.reviews.pull({_id: reviewId});
+        const result = await this.model.update({ _id: userId}, { $pull: {reviews: {_id: reviewId}}});
         return result.n > 0;
+    }
+
+    async readReviews(id){
+        const user = await this.model.findById(id)
+            .populate({ path: 'reviews.reviewedBy', model: 'User'});
+            console.log(user);
+        return user.reviews;
+    }
+
+    async readAllReviews(){
+        const users = await this.model.find();
+        const reviews = [];
+        for(let user in users){
+            for(let review in users[user].reviews){
+                if(users[user].reviews[review].deletedAt == null)
+                    reviews.push(users[user].reviews[review]);
+            }
+        }
+        return reviews;
     }
 }
 
