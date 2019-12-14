@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('./middleware/auth');
 const company = require('./middleware/company');
 const admin = require('./middleware/admin');
-const adminOrUser = require('./middleware/idkanameforthis');
+const validateAdminOrUserId = require('./middleware/validators/validateAdminOrUserId');
 const adminOrCompany = require('./middleware/companyOrAdmin');
 const {
     UserController,
@@ -21,23 +21,22 @@ const {
 router.get('/users', [auth, admin], UserController.getAllUsers);
 router.post('/users/login', UserController.login);
 router.post('/users', UserController.register.bind(UserController));
-router.get('/users/:id', [auth, adminOrUser], UserController.show);
-router.put('/users/:id', [auth, adminOrUser], UserController.update.bind(UserController));
-router.delete('/users/:id', [auth, adminOrUser], UserController.delete);
+router.get('/users/:id', [auth, validateAdminOrUserId], UserController.show);
+router.put('/users/:id', [auth, validateAdminOrUserId], UserController.update.bind(UserController));
+router.delete('/users/:id', [auth, validateAdminOrUserId], UserController.delete);
 router.put('/users/:id/skills', auth, UserController.updateMySkills);
 
 // GET /users/:id/skills (skillController#showForUser) Admin, Me as maker
-router.get('/users/:id/assignments', [auth, company, adminOrUser], AssignmentController.showForUser);
+router.get('/users/:id/assignments', [auth, company, validateAdminOrUserId], AssignmentController.showForUser);
 router.get('/users/:id/reviews', auth, ReviewController.getUserReviews);
 // GET /users/:id/applications (applicationController#showForUser) Admin, Me as Maker
 // GET /assignments/:id/applications (applicationController#showForAssignment) Auth
-// POST /assignments/:id/applications (applicationController#showForAssignment) Me as maker
 router.post('/users/:id/applications', auth, ApplicationController.submit);
 
-router.put('/users/:id/maker-profile', [auth, adminOrUser], UserController.updateMyMakerProfile.bind(UserController));
-router.put('/users/:id/company-profile', [auth, adminOrUser], UserController.updateMyCompanyProfile.bind(UserController));
-router.put('/users/:id/password', [auth, adminOrUser], UserController.updateMyPassword);
-router.delete('/users/:id/tokens', [auth, adminOrUser], UserController.clearMyTokens);
+router.put('/users/:id/maker-profile', [auth, validateAdminOrUserId], UserController.updateMyMakerProfile.bind(UserController));
+router.put('/users/:id/company-profile', [auth, validateAdminOrUserId], UserController.updateMyCompanyProfile.bind(UserController));
+router.put('/users/:id/password', [auth, validateAdminOrUserId], UserController.updateMyPassword);
+router.delete('/users/:id/tokens', [auth, validateAdminOrUserId], UserController.clearMyTokens);
 // Upload routes | A company representative can upload a video to an assignment.
 // Discover routes | A maker can discover assignments.
 
@@ -74,6 +73,5 @@ router.post('/admins', [auth, admin], UserController.createAdmin);
 // NOTES
 // TODO: resolve flagged reviews (admin)
 // TODO: flag a review (user)
-// TODO: rename idkanameforthis.js
 
 module.exports = router;
