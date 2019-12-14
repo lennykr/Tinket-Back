@@ -3,20 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
-
-const profile = {
-    contactInfo: {
-        email: String,
-        phoneNumber: String,
-        linkedIn: String
-    },
-
-    location: {
-        country: String,
-        city: String,
-        postalCode: String,
-    },
-};
+const profile = require('./_profile');
 
 const UserSchema = mongoose.Schema({
     email: {

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const moderate = require('./_moderate');
 
 const AssignmentSchema = mongoose.Schema({
     title: {
@@ -48,7 +49,9 @@ const AssignmentSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-    }
+    },
+
+    ...moderate
 });
 
 module.exports = mongoose.model('Assignment', AssignmentSchema);

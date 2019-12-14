@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moderate = require('./_moderate');
 
 const reviewSchema = mongoose.Schema({
     creator: {
@@ -21,7 +22,9 @@ const reviewSchema = mongoose.Schema({
     score: {
         type: Number,
         default: 0
-    }
+    },
+    
+    ...moderate
 });
 
 module.exports = mongoose.model('Review', reviewSchema);
