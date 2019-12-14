@@ -13,6 +13,7 @@ module.exports = async (req, res, next) => {
                 res.status(401).send({ message: 'Invalid token.' });
 
             user.isAdmin = () => !!req.user.isAdmin;
+            // TODO: add user.isCompany
             req.user = user;
             req.token = token;
 
@@ -23,6 +24,7 @@ module.exports = async (req, res, next) => {
         }
 
     } catch (error) {
+        console.log(error);
         res.status(401).send({ message: 'Authorization required.' });
     }
 };
