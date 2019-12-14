@@ -24,7 +24,9 @@ class ApplicationController {
     }
 
     update(req, res) {
-
+        promiseResponseHelper(req, res, ApplicationService.updateApplication(req.params.id,{
+            contacted: req.body.contacted
+        }));
     }
 }
 

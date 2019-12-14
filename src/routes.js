@@ -64,7 +64,6 @@ router.delete('/reviews/:id', auth, ReviewController.delete);
 
 // -- Applications --
 router.get('/applications/:id', auth, ApplicationController.show);
-// PUT /applications/:id (applicationController#update) Auth
 router.put('/applications/:id', auth, ApplicationController.update);
 router.delete('/applications/:id', auth, ApplicationController.delete);
 

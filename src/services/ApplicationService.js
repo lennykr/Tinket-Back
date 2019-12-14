@@ -39,6 +39,15 @@ class ApplicationService {
             throw new Error('Verwijderen van een application is mislukt');
         }
     }
+
+    async updateApplication(id, application) {
+        try {
+            await ApplicationRepository.update(id, application);
+        } catch (ex) {
+            log(ex);
+            throw new Error('Toevoegen van een application is mislukt');
+        }
+    }
 }
 
 module.exports = ApplicationService;
