@@ -16,7 +16,15 @@ class ApplicationController {
     }
 
     delete(req, res) {
-        promiseResponseHelper(req, res, ApplicationService.delete(req.params.id));
+        promiseResponseHelper(req, res, ApplicationService.delete(req.user, req.params.id));
+    }
+
+    show(req, res) {
+        promiseResponseHelper(req, res, ApplicationService.get(req.params.id));
+    }
+
+    update(req, res) {
+
     }
 }
 

@@ -1,5 +1,6 @@
 const BadRequestError = require("../exceptions").BadRequestError;
 const {ApplicationRepository} = require('../repositories/index');
+const {log} = require('../helpers');
 
 class ApplicationService {
     getAssignmentApplications(assignmentId) {
@@ -18,9 +19,21 @@ class ApplicationService {
         }
     }
 
-    async delete(id) {
+    async delete(user, id) {
+        if (!user.isAdmin && user.isCompany())
+            throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
+
         try {
             await ApplicationRepository.delete(id);
+        } catch (ex) {
+            log(ex);
+            throw new Error('Verwijderen van een application is mislukt');
+        }
+    }
+
+    async get(id) {
+        try {
+            return await ApplicationRepository.readInclEverything(id);
         } catch (ex) {
             log(ex);
             throw new Error('Verwijderen van een application is mislukt');
