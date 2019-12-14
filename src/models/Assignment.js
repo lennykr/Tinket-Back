@@ -29,10 +29,6 @@ const AssignmentSchema = mongoose.Schema({
             type: String,
             required: true,
         },
-        street: {
-            type: String,
-            required: true,
-        },
         postalCode: {
             type: String,
             required: true,

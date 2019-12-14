@@ -11,7 +11,6 @@ class AssignmentController {
             location: {
                 country: req.body.location.country,
                 city: req.body.location.city,
-                street: req.body.location.street,
                 postalCode: req.body.location.postalCode
             },
             open: req.body.open,
