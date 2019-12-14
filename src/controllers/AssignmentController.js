@@ -25,7 +25,7 @@ class AssignmentController {
     }
 
     update(req, res) {
-        promiseResponseHelper(req, res, AssignmentService.update(req.params.id, this._toAssignmentPayload(req)));
+        promiseResponseHelper(req, res, AssignmentService.update(req.params.id, req.isAdmin ? req.body : this._toAssignmentPayload(req)));
     }
 
     delete(req, res) {

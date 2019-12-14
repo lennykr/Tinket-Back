@@ -53,7 +53,6 @@ router.delete('/skills/:id', [auth, admin], SkillController.delete);
 // GET /assignments (skillController#index) Admin
 router.post('/assignments', [auth, company], AssignmentController.create.bind(AssignmentController));
 // GET /assignments/:id (skillController#show) Auth
-// TODO: do not update createdBy field to admin id when updating as admin
 router.put('/assignments/:id', [auth, adminOrCompany], AssignmentController.update.bind(AssignmentController));
 router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
 
