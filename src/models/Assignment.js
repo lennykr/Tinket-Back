@@ -37,18 +37,6 @@ const AssignmentSchema = mongoose.Schema({
             required: true,
         },
     },
-    candidate: [{
-        contacted: {
-            type: Boolean,
-            required: true,
-            default: () => false,
-        },
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true,
-        }
-    }],
     open: {
         type: Boolean,
         required: true
