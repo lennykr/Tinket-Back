@@ -155,4 +155,46 @@ module.exports = class UserController {
             req.body.newPassword
         ));
     }
+
+    /**
+     * (Admin) get all registered users
+     * @param req
+     * @param res
+     */
+    getAllUsers(req, res) {
+        promiseResponseHelper(req, res, UserService.getAllUsers());
+    }
+
+    /**
+     * (Admin) update user
+     * @param req
+     * @param res
+     */
+    updateUser(req, res) {
+        promiseResponseHelper(req, res, UserService.update(req.body._id, req.body));
+    }
+
+    /**
+     * (Admin) delete user
+     * @param req
+     * @param res
+     */
+    deleteUser(req, res) {
+        promiseResponseHelper(req, res, UserService.deleteUser(req.body._id));
+    }
+
+    /**
+     * (Admin) add admin user account
+     * @param req
+     * @param res
+     */
+    createAdmin(req, res) {
+        promiseResponseHelper(req, res, UserService.register({
+            email: req.body.email,
+            password: req.body.password,
+            firstname: req.body.firstname,
+            lastname: req.body.firstname,
+            isAdmin: true
+        }));
+    }
 };

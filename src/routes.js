@@ -36,4 +36,9 @@ router.get('/skills', [auth], SkillController.getAllSkills);
 router.delete('/skills/:id', [auth, admin], SkillController.delete);
 router.put('/skills/:id', [auth, admin], SkillController.update.bind(SkillController));
 
+router.get('/users', [auth, admin], UserController.getAllUsers);
+router.put('/users', [auth, admin], UserController.updateUser);
+router.delete('/users', [auth, admin], UserController.deleteUser);
+router.post('/admins', [auth, admin], UserController.createAdmin);
+
 module.exports = router;

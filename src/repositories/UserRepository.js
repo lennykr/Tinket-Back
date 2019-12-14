@@ -6,6 +6,10 @@ const {BadRequestError} = require('../exceptions');
 class UserRepository extends BaseRepository {
     constructor() {super(User);}
 
+    readAll(conditions = {}) {
+        return this.model.find(conditions);
+    }
+
     async readWithSkills(objectId) {
         const document = await this.model.findById(objectId)
             .populate({ path: 'makerProfile.skills', model: 'Skill'});
