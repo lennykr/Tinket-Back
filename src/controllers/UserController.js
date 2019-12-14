@@ -94,6 +94,15 @@ module.exports = class UserController {
     }
 
     /**
+     * Get all reviews (where deletedAt == null).
+     * @param req
+     * @param res
+     */
+    getAllReviews(req, res){
+        promiseResponseHelper(req, res, UserService.readAllReviews());
+    }
+
+    /**
      * Add a review to a user.
      * @param req
      * @param res

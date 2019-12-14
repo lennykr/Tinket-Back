@@ -44,6 +44,18 @@ class UserRepository extends BaseRepository {
             console.log(user);
         return user.reviews;
     }
+
+    async readAllReviews(){
+        const users = await this.model.find();
+        const reviews = [];
+        for(let user in users){
+            for(let review in users[user].reviews){
+                if(users[user].reviews[review].deletedAt == null)
+                    reviews.push(users[user].reviews[review]);
+            }
+        }
+        return reviews;
+    }
 }
 
 module.exports = UserRepository;

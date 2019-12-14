@@ -18,6 +18,7 @@ router.post('/users/login', UserController.login);
 router.post('/users', UserController.register.bind(UserController));
 router.post('/users/review', auth, UserController.addReview.bind(UserController));
 router.delete('/users/review', [auth, admin], UserController.deleteReview);
+router.get('/users/allReviews', UserController.getAllReviews);
 router.get('/users/me', auth, UserController.showMe);
 router.get('/users/me/reviews', auth, UserController.getReviews);
 router.get('/users/me/reviewsById', UserController.getReviewsById);

@@ -111,6 +111,21 @@ const UserSchema = mongoose.Schema({
                 max: 5,
                 required: true
             },
+            flaggedAt: {
+                type: Date,
+                required: false,
+                default: null
+            },
+            flagSolvedAt: {
+                type: Date,
+                required: false,
+                default: null
+            },
+            deletedAt: {
+                type: Date,
+                required: false,
+                default: null
+            }
         }
     ],
 
