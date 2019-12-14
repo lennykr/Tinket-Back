@@ -15,7 +15,7 @@ const sendError = (req, res, error) => {
 };
 
 const log = (message) => {
-    if(process.env.APP_ENV !== "prod") console.error(message);
+    if(process.env.APP_ENV !== "production") console.error(message);
 };
 
 module.exports = {
