@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const moderate = require('./_moderate');
 
 const reviewSchema = mongoose.Schema({
@@ -21,9 +22,10 @@ const reviewSchema = mongoose.Schema({
     description: String,
     score: {
         type: Number,
-        default: 0
+        default: 0,
+        max: 5
     },
-    
+
     ...moderate
 });
 

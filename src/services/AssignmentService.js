@@ -49,7 +49,7 @@ class AssignmentService {
      */
     async showById(id){
         try{
-            return await AssignmentRepository.read(id);
+            return await AssignmentRepository.readInclApplications(id);
         }catch (ex) {
             log (ex);
             throw new Error('Ophalen van een assignment is mislukt');

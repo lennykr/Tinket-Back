@@ -47,10 +47,11 @@ class UserService {
      * @return {Promise<void>}
      */
     async update(id, user, profile) {
-        if (user.companyProfile && profile.makerProfile)
+        console.log('iscompany ' + user.isCompany());
+        if (user.isCompany() && profile.makerProfile)
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
-        if (user.makerProfile && profile.companyProfile)
+        if (user.isMaker() && profile.companyProfile)
             throw new BadRequestError('Je hebt een bedrijfsaccount nodig om deze actie uit te voeren!');
 
         try {
@@ -73,7 +74,7 @@ class UserService {
     }
 
     async updateMakerProfile(id, user, makerProfile) {
-        if (!user.isAdmin  && user.companyProfile != null)
+        if (!user.isAdmin  && user.isCompany())
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
         try {
@@ -86,7 +87,7 @@ class UserService {
     }
 
     async updateCompanyProfile(id, user, companyProfile) {
-        if (!user.isAdmin && user.makerProfile != null)
+        if (!user.isAdmin && user.isMaker())
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
         try {
@@ -120,7 +121,7 @@ class UserService {
 
     async addReview(id, review){
         try{
-            await UserRepository.addReview(id, review);
+            await UserRepository.add(id, review);
         }
         catch (ex){
             log (ex);
@@ -136,7 +137,7 @@ class UserService {
             log (ex);
             throw new InternalServerError('Er is iets mis gegaan tijdens het flaggen van een review.');
         }
-        
+
     }
 
     async deleteReviewFlag(userId, reviewId){
