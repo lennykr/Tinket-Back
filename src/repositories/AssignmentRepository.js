@@ -10,6 +10,10 @@ class AssignmentRepository extends BaseRepository {
         return this.model.find(conditions).populate('requiredSkills');
     }
 
+    readInclApplications(id) {
+        return this.model.findById(id).populate('applications');
+    }
+
     // TODO: move these to BaseRepository perhaps?
     async updateWhere(conditions, data) {
         const result = await this.model.updateOne(conditions, { $set: data });
