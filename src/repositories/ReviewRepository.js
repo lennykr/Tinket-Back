@@ -22,6 +22,15 @@ class ReviewRepository extends BaseRepository {
 
         return reviews.some(review => review.creator.user.toString() == reviewWriterId);
     }
+
+    findReceivedReviews(userId) {
+        return this.model.find({reviewed: userId})
+            .populate({ path: 'creator.user', model: 'User'});
+    }
+
+    findWrittenReviews(userId) {
+        return this.model.find({'creator.user': userId});
+    }
 }
 
 module.exports = ReviewRepository;

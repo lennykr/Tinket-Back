@@ -38,6 +38,11 @@ class ReviewController {
         promiseResponseHelper(req, res, ReviewService.deleteReview(req.params.id));
     }
 
+    getUserReviews(req, res) {
+        const userId = req.params.id;
+        promiseResponseHelper(req, res, ReviewService.getUserReviews(userId));
+    }
+
 }
 
 module.exports = ReviewController;

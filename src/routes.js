@@ -28,7 +28,7 @@ router.put('/users/:id/skills', auth, UserController.updateMySkills);
 // -- Relationships --
 // GET /users/:id/skills (skillController#showForUser) Admin, Me as maker
 router.get('/users/:id/assignments', [auth, company, adminOrUser], AssignmentController.showForUser);
-// GET /users/:id/reviews (reviewController#showForUser) Auth
+router.get('/users/:id/reviews', auth, ReviewController.getUserReviews);
 // GET /users/:id/applications (applicationController#showForUser) Admin, Me as Maker
 // GET /assignments/:id/applications (applicationController#showForAssignment) Auth
 // POST /assignments/:id/applications (applicationController#showForAssignment) Me as maker

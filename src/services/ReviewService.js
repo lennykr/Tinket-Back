@@ -36,7 +36,7 @@ class ReviewService {
             return await ReviewRepository.create(review);
         } catch (ex) {
             log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van alle skills');
+            throw new Error('Er is iets mis gegaan bij het aanmaken van deze review');
         }
     }
 
@@ -45,7 +45,7 @@ class ReviewService {
             return await ReviewRepository.read(id);
         } catch (ex) {
             log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van alle skills');
+            throw new Error('Er is iets mis gegaan bij het ophalen van deze review');
         }
     }
 
@@ -54,7 +54,16 @@ class ReviewService {
             await ReviewRepository.delete(id);
         } catch (ex) {
             log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van alle skills');
+            throw new Error('Er is iets mis gegaan bij het verwijderen van deze review');
+        }
+    }
+
+    async getUserReviews(userId) {
+        try {
+            return await ReviewRepository.findReceivedReviews(userId);
+        } catch (ex) {
+            log(ex);
+            throw new Error('Er is iets mis gegaan bij het ophalen van reviews');
         }
     }
 
