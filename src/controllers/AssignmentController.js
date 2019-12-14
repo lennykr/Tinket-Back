@@ -20,6 +20,10 @@ class AssignmentController {
         };
     }
 
+    show(req, res){
+        promiseResponseHelper(req, res, AssignmentService.showById(req.params.id));
+    }
+
     create(req, res) {
         promiseResponseHelper(req, res, AssignmentService.create(this._toAssignmentPayload(req)));
     }

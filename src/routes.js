@@ -19,25 +19,6 @@ const {
 router.get('/users', [auth, admin], UserController.getAllUsers);
 router.post('/users/login', UserController.login);
 router.post('/users', UserController.register.bind(UserController));
-<<<<<<< HEAD
-router.post('/users/review', auth, UserController.addReview.bind(UserController));
-router.put('/users/review/deleteReview', [auth, admin], UserController.deleteReview);
-router.put('/users/review/addFlag', UserController.addReviewFlag);
-router.put('/users/review/deleteFlag', [auth, admin], UserController.deleteReviewFlag);
-router.get('/users/allReviews', UserController.getAllReviews);
-router.get('/users/me', auth, UserController.showMe);
-router.get('/users/me/reviews', auth, UserController.getReviews);
-router.get('/users/me/reviewsById', UserController.getReviewsById);
-router.put('/users/me/maker-profile', auth, UserController.updateMyMakerProfile.bind(UserController));
-router.put('/users/me/company-profile', auth, UserController.updateMyCompanyProfile.bind(UserController));
-router.put('/users/me/skills', auth, UserController.updateMySkills);
-router.put('/users/me', auth, UserController.updateMyProfile.bind(UserController));
-router.delete('/users/me/tokens', auth, UserController.clearMyTokens);
-router.put('/users/me/change-password', auth, UserController.updateMyPassword);
-
-// Skill routes
-router.post('/skills', [auth, admin], SkillController.add.bind(SkillController));
-=======
 router.get('/users/:id', [auth, adminOrUser], UserController.show);
 router.put('/users/:id', [auth, adminOrUser], UserController.update.bind(UserController));
 router.delete('/users/:id', [auth, adminOrUser], UserController.delete);
@@ -61,7 +42,6 @@ router.delete('/users/:id/tokens', [auth, adminOrUser], UserController.clearMyTo
 router.post('/admins', [auth, admin], UserController.createAdmin);
 
 // -- Skills --
->>>>>>> d2eee60917c206a2d37641dfdedc2a6a268ac298
 router.get('/skills', [auth], SkillController.getAllSkills);
 router.post('/skills', [auth, admin], SkillController.add.bind(SkillController));
 //  GET /skills/:id (skillController#show) Admin
@@ -72,6 +52,7 @@ router.delete('/skills/:id', [auth, admin], SkillController.delete);
 // -- Assignments --
 // GET /assignments (skillController#index) Admin
 router.post('/assignments', [auth, company], AssignmentController.create.bind(AssignmentController));
+router.get('/assignments/:id', auth, AssignmentController.show);
 // GET /assignments/:id (skillController#show) Auth
 router.put('/assignments/:id', [auth, adminOrCompany], AssignmentController.update.bind(AssignmentController));
 router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);

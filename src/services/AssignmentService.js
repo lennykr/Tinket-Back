@@ -20,7 +20,7 @@ class AssignmentService {
     /**
      * Delete an assignment
      * @param id assignment id
-     * @param creatorId creator od the assignment
+     * @param creatorId creator of the assignment
      * @return {Promise<void>}
      */
     async delete(id){
@@ -39,6 +39,20 @@ class AssignmentService {
         }catch (ex) {
             log (ex);
             throw new Error('Ophalen van alle assignments is mislukt');
+        }
+    }
+
+    /**
+     * Get an assignment by its id
+     * @param id
+     * @return {Promise<void>}
+     */
+    async showById(id){
+        try{
+            return await AssignmentRepository.read(id);
+        }catch (ex) {
+            log (ex);
+            throw new Error('Ophalen van een assignment is mislukt');
         }
     }
 }
