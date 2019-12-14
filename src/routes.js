@@ -22,6 +22,7 @@ router.post('/users', UserController.register.bind(UserController));
 router.get('/users/:id', [auth, adminOrUser], UserController.show);
 router.put('/users/:id', [auth, adminOrUser], UserController.update.bind(UserController));
 router.delete('/users/:id', [auth, adminOrUser], UserController.delete);
+router.put('/users/:id/skills', auth, UserController.updateMySkills);
 
 // -- Relationships --
 // GET /users/:id/skills (skillController#showForUser) Admin, Me as maker
@@ -47,7 +48,6 @@ router.post('/skills', [auth, admin], SkillController.add.bind(SkillController))
 //  GET /skills/:id (skillController#show) Admin
 router.put('/skills/:id', [auth, admin], SkillController.update.bind(SkillController));
 router.delete('/skills/:id', [auth, admin], SkillController.delete);
-
 
 // -- Assignments --
 // GET /assignments (skillController#index) Admin
