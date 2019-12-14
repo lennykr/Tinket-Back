@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const {log} = require('../helpers');
 
 module.exports = async (req, res, next) => {
     try {
@@ -12,8 +13,10 @@ module.exports = async (req, res, next) => {
             if (!user)
                 res.status(401).send({ message: 'Invalid token.' });
 
-            user.isAdmin = () => !!req.user.isAdmin;
-            // TODO: add user.isCompany
+            user.isAdmin   =  () => !!req.user.isAdmin;
+            user.isCompany =  () => !!req.user.companyProfile;
+            user.isMaker   =  () => !!req.user.makerProfile;
+
             req.user = user;
             req.token = token;
 
@@ -24,7 +27,7 @@ module.exports = async (req, res, next) => {
         }
 
     } catch (error) {
-        console.log(error);
+        log(error);
         res.status(401).send({ message: 'Authorization required.' });
     }
 };
