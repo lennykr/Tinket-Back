@@ -25,6 +25,11 @@ const reviewSchema = mongoose.Schema({
         default: 0,
         max: 5
     },
+    createdAt: {
+        type: Schema.Types.Date,
+        default: () => moment().format(),
+        required: true,
+    },
 
     ...moderate
 });
