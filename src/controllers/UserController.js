@@ -192,7 +192,7 @@ module.exports = class UserController {
             email: req.body.email,
             password: req.body.password,
             firstname: req.body.firstname,
-            lastname: req.body.firstname
+            lastname: req.body.lastname
         }));
     }
 
