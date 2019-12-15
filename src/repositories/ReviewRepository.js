@@ -5,7 +5,8 @@ class ReviewRepository extends BaseRepository {
     constructor() {super(Review);}
 
     readAll(filter = {}, sort) {
-        return this.model.find(filter).sort('-' + sort);
+        return this.model.find(filter).sort('-' + sort)
+        .populate('reviewed');
     }
 
     /**
