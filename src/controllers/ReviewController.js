@@ -29,7 +29,7 @@ class ReviewController {
     getAllFlagResolvedAt(req, res) {
         promiseResponseHelper(req, res, ReviewService.getAllFlagResolvedAt());
     }
-    
+
     /**
      * (Admin) get all exclusively deletedAt reviews
      * @param req
@@ -84,6 +84,10 @@ class ReviewController {
 
     ignoreFlag(req, res) {
         promiseResponseHelper(req, res, ReviewService.ignoreFlagged(req.params.id));
+    }
+
+    undoIgnoreFlag(req, res) {
+        promiseResponseHelper(req, res, ReviewService.ignoreFlagged(req.params.id, true));
     }
 
 }

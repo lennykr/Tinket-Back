@@ -37,11 +37,12 @@ class ModerationService {
     /**
      * Ignore flagged document (false positive)
      * @param id
+     * @param undo whether or not to undo the ignore flag action
      * @return {Promise<void>}
      */
-    async ignoreFlagged(id) {
+    async ignoreFlagged(id, undo = false) {
         try {
-            await this.repo.moderate(id, {deletedAt: new Date()});
+            await this.repo.moderate(id, undo ? {deletedAt: null, flagResolvedAt: new Date()} : {deletedAt: new Date()}, undo);
         } catch (ex) {
             log(ex);
             throw new Error('Er is iets mis gegaan bij het negeren van een flag');
