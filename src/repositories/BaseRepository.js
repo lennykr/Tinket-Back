@@ -61,7 +61,7 @@ class BaseRepository {
      * Update the 'moderate' fields in a document (if any)
      * @param objectId
      * @param data
-     * @param forceUpdate if set to true, the filter will be ignored
+     * @param forceUpdate if set to true, the filter will be ignored and the update will be executed using the given data
      * @return {Promise<boolean>}
      */
     async moderate(objectId, data, forceUpdate = false) {
@@ -73,7 +73,7 @@ class BaseRepository {
                 filter[key] = {$eq: null};
             });
 
-        const result = await this.model.updateOne({ _id: objectId, ...filter}, { $set: data });
+        const result = await this.model.updateOne({ _id: objectId, ...filter}, !forceUpdate ? { $set: data } : data);
         return result.n > 0;
     }
 }

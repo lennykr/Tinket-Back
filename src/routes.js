@@ -41,7 +41,6 @@ router.put('/users/:id/company-profile', [auth, validateAdminOrUserId], UserCont
 router.put('/users/:id/password', [auth, validateAdminOrUserId], UserController.updateMyPassword);
 router.delete('/users/:id/tokens', [auth, validateAdminOrUserId], UserController.clearMyTokens);
 // Upload routes | A company representative can upload a video to an assignment.
-// Discover routes | A maker can discover assignments.
 
 // -- Skills --
 router.get('/skills', [auth], SkillController.getAllSkills);
