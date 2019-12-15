@@ -68,6 +68,10 @@ class AssignmentController {
     ignoreFlag(req, res) {
         promiseResponseHelper(req, res, AssignmentService.ignoreFlagged(req.params.id));
     }
+
+    undoIgnoreFlag(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.ignoreFlagged(req.params.id, true));
+    }
 }
 
 module.exports = AssignmentController;

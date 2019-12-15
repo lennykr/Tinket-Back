@@ -61,15 +61,17 @@ class BaseRepository {
      * Update the 'moderate' fields in a document (if any)
      * @param objectId
      * @param data
+     * @param forceUpdate if set to true, the filter will be ignored
      * @return {Promise<boolean>}
      */
-    async moderate(objectId, data) {
+    async moderate(objectId, data, forceUpdate = false) {
         // create a filter that makes sures that specified data fields are only updated if they are NOT set yet
         // example: flaggedAt will only be modified if its current value is null
         const filter = {};
-        Object.keys(data).map((key) => {
-            filter[key] = {$eq: null};
-        });
+        if (!forceUpdate)
+            Object.keys(data).map((key) => {
+                filter[key] = {$eq: null};
+            });
 
         const result = await this.model.updateOne({ _id: objectId, ...filter}, { $set: data });
         return result.n > 0;

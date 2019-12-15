@@ -58,7 +58,8 @@ router.put('/assignments/:id', [auth, adminOrCompany], AssignmentController.upda
 router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
 router.get('/assignments/:id/flag', auth, AssignmentController.flag);
 router.get('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
-router.get('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.resolveFlag);
+router.get('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.ignoreFlag);
+router.get('/assignments/:id/flag/ignore/undo', [auth, admin], ReviewController.undoIgnoreFlag);
 
 
 // -- Reviews --
@@ -72,6 +73,7 @@ router.delete('/reviews/:id', auth, ReviewController.delete);
 router.get('/reviews/:id/flag', auth, ReviewController.flag);
 router.get('/reviews/:id/flag/resolve', [auth, admin], ReviewController.resolveFlag);
 router.get('/reviews/:id/flag/ignore', [auth, admin], ReviewController.ignoreFlag);
+router.get('/reviews/:id/flag/ignore/undo', [auth, admin], ReviewController.undoIgnoreFlag);
 
 
 // -- Applications --
