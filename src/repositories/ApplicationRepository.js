@@ -11,6 +11,12 @@ class ApplicationRepository extends BaseRepository {
             .populate('assignment');
     }
 
+    readEverythingWhere(filter, ...toPopulate) {
+        console.log(filter);
+        return this.model.find(filter)
+            .populate(toPopulate);
+    }
+
 }
 
 module.exports = ApplicationRepository;

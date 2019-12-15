@@ -46,11 +46,11 @@ const AssignmentSchema = mongoose.Schema({
         ref: 'User',
         required: true,
     },
-    applications: [{
+    /*applications: [{
         type: Schema.Types.ObjectId,
         ref: 'Application',
         required: false,
-    }],
+    }],*/
 
     ...moderate
 });

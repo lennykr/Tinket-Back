@@ -30,8 +30,8 @@ router.put('/users/:id/skills', auth, UserController.updateMySkills);
 router.get('/users/:id/assignments', [auth, company, validateAdminOrUserId], AssignmentController.showForUser);
 router.get('/users/:id/reviews', auth, ReviewController.getUserReviews);
 router.get('/users/:id/writtenReviews', auth, ReviewController.getWrittenReviews);
-// GET /users/:id/applications (applicationController#showForUser) Admin, Me as Maker
-// GET /assignments/:id/applications (applicationController#showForAssignment) Auth
+router.get('/users/:id/applications', [auth, validateAdminOrUserId], ApplicationController.showForUser);
+router.get('/assignments/:id/applications', auth, ApplicationController.showForAssignment);
 router.post('/users/:id/applications', auth, ApplicationController.submit);
 
 router.put('/users/:id/maker-profile', [auth, validateAdminOrUserId], UserController.updateMyMakerProfile.bind(UserController));
@@ -49,14 +49,14 @@ router.delete('/skills/:id', [auth, admin], SkillController.delete);
 
 
 // -- Assignments --
-// GET /assignments (skillController#index) Admin
+router.get('/assignments', [auth, admin], AssignmentController.showAll.bind(AssignmentController));
 router.post('/assignments', [auth, company], AssignmentController.create.bind(AssignmentController));
 router.get('/assignments/:id', auth, AssignmentController.show);
 router.put('/assignments/:id', [auth, adminOrCompany], AssignmentController.update.bind(AssignmentController));
 router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
-router.get('/assignments/:id/flag', auth, AssignmentController.flag);
-router.get('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
-router.get('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.resolveFlag);
+router.post('/assignments/:id/flag', auth, AssignmentController.flag);
+router.post('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
+router.post('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.resolveFlag);
 
 
 // -- Reviews --

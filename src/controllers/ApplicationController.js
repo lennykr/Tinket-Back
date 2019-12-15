@@ -28,6 +28,14 @@ class ApplicationController {
             contacted: req.body.contacted
         }));
     }
+
+    showForUser(req, res) {
+        promiseResponseHelper(req, res, ApplicationService.getByMaker(req.params.id));
+    }
+
+    showForAssignment(req, res) {
+        promiseResponseHelper(req, res, ApplicationService.getByAssignment(req.params.id));
+    }
 }
 
 module.exports = ApplicationController;

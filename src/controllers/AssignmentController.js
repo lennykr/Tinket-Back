@@ -23,6 +23,10 @@ class AssignmentController {
         promiseResponseHelper(req, res, AssignmentService.showById(req.params.id));
     }
 
+    showAll(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.showAll());
+    }
+
     create(req, res) {
         promiseResponseHelper(req, res, AssignmentService.create(this._toAssignmentPayload(req)));
     }

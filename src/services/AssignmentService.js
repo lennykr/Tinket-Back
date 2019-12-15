@@ -61,6 +61,15 @@ class AssignmentService extends ModerationService {
             throw new Error('Ophalen van een assignment is mislukt');
         }
     }
+
+    async showAll(){
+        try{
+            return await AssignmentRepository.readAllWhere({});
+        }catch (ex) {
+            log (ex);
+            throw new Error('Ophalen van assignments is mislukt');
+        }
+    }
 }
 
 module.exports = AssignmentService;
