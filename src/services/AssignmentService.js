@@ -1,5 +1,5 @@
 const {log} = require('../helpers');
-const {AssignmentRepository} = require('../repositories/index');
+const {AssignmentRepository, UserRepository} = require('../repositories/index');
 const ModerationService = require('./ModerationService');
 
 class AssignmentService extends ModerationService {
@@ -68,6 +68,16 @@ class AssignmentService extends ModerationService {
         }catch (ex) {
             log (ex);
             throw new Error('Ophalen van assignments is mislukt');
+        }
+    }
+
+    async getAllRecommended(userId) {
+        try{
+            const user = await UserRepository.read(userId);
+            return await AssignmentRepository.readAllWhere({requiredSkills: { $in : user.makerProfile.skills} });
+        }catch (ex) {
+            log (ex);
+            throw new Error('Ophalen van recommended assignments is mislukt');
         }
     }
 }
