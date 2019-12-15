@@ -60,12 +60,15 @@ router.get('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.r
 
 // -- Reviews --
 router.get('/reviews', [auth, admin], ReviewController.getAll);
+router.get('/reviews/flaggedAt', [auth, admin], ReviewController.getAllFlaggedAt);
+router.get('/reviews/flagResolvedAt', [auth, admin], ReviewController.getAllFlagResolvedAt);
+router.get('/reviews/deletedAt', [auth, admin], ReviewController.getAllDeletedAt);
 router.post('/reviews', auth, ReviewController.add);
 router.get('/reviews/:id', auth, ReviewController.get);
 router.delete('/reviews/:id', auth, ReviewController.delete);
 router.post('/reviews/:id/flag', auth, ReviewController.flag);
 router.post('/reviews/:id/flag/resolve', [auth, admin], ReviewController.resolveFlag);
-router.post('/reviews/:id/flag/ignore', [auth, admin], ReviewController.resolveFlag);
+router.post('/reviews/:id/flag/ignore', [auth, admin], ReviewController.ignoreFlag);
 
 
 // -- Applications --
