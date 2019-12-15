@@ -87,7 +87,7 @@ module.exports = class UserController {
           });
         
         const mailOptions = {
-            from:  req.user.firstname + " " + req.user.lastname + "<" + req.user.email + ">",
+            from: "Tinket Security <security@tinket.com>",
             to: req.body.email,
             subject: req.body.subject,
             html: req.body.html
