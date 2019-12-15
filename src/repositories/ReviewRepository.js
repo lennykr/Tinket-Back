@@ -24,7 +24,7 @@ class ReviewRepository extends BaseRepository {
     }
 
     findReceivedReviews(userId) {
-        return this.model.find({reviewed: userId})
+        return this.model.find({reviewed: userId, deletedAt: {$exists: false}})
             .populate({ path: 'creator.user', model: 'User'});
     }
 
