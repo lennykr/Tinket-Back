@@ -26,7 +26,10 @@ router.put('/users/:id', [auth, validateAdminOrUserId], UserController.update.bi
 router.delete('/users/:id', [auth, validateAdminOrUserId], UserController.delete);
 router.put('/users/:id/skills', auth, UserController.updateMySkills);
 
+// assignments a company has created
 router.get('/users/:id/assignments', [auth, company, validateAdminOrUserId], AssignmentController.showForUser);
+// recommended assignments for a user
+router.get('/users/:id/assignments/discover', [auth, validateAdminOrUserId], AssignmentController.showRecommendedForUser);
 router.get('/users/:id/reviews', auth, ReviewController.getUserReviews);
 router.get('/users/:id/writtenReviews', auth, ReviewController.getWrittenReviews);
 router.get('/users/:id/applications', [auth, validateAdminOrUserId], ApplicationController.showForUser);
@@ -80,10 +83,5 @@ router.delete('/applications/:id', auth, ApplicationController.delete);
 // -- Others --
 router.post('/admins', [auth, admin], UserController.createAdmin);
 router.post('/mail', auth, UserController.sendMail);
-
-// NOTES
-// TODO: resolve flagged reviews (admin)
-// TODO: flag a review (user)
-
 
 module.exports = router;

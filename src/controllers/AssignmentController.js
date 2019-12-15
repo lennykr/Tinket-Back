@@ -45,10 +45,16 @@ class AssignmentController {
      * @param res
      */
     showForUser(req, res) {
-        // TODO: user? -> get available assignments based on user skills
-        //       company? - > show my created assignments
-        //       admin? -> show assignments a company has created
         promiseResponseHelper(req, res, AssignmentService.getAll(req.params.id));
+    }
+
+    /**
+     * Show assignments for a specific user, based on their skills
+     * @param req
+     * @param res
+     */
+    showRecommendedForUser(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.getAllRecommended(req.params.id));
     }
 
     flag(req, res) {
