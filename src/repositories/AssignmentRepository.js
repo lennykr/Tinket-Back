@@ -10,8 +10,10 @@ class AssignmentRepository extends BaseRepository {
         return this.model.find(conditions).populate('requiredSkills');
     }
 
-    readInclApplications(id) {
-        return this.model.findById(id).populate('applications');
+    readAllById(id) {
+        return this.model.findById(id)
+            .populate('requiredSkills')
+            .populate('applications');
     }
 
     // TODO: move these to BaseRepository perhaps?
