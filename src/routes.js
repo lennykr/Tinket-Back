@@ -78,9 +78,4 @@ router.delete('/applications/:id', auth, ApplicationController.delete);
 router.post('/admins', [auth, admin], UserController.createAdmin);
 router.post('/mail', auth, UserController.sendMail);
 
-// NOTES
-// TODO: resolve flagged reviews (admin)
-// TODO: flag a review (user)
-
-
 module.exports = router;
