@@ -8,6 +8,45 @@ class AssignmentService extends ModerationService {
         super(AssignmentRepository);
     }
 
+    /**
+     * Returns all assignments that were exclusively flagged by a user
+     * @return {Promise<void>}
+     */
+    async getAllFlaggedAt() {
+        try {
+            return await AssignmentRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: false}, flaggedAt: {$exists: true}});
+        } catch (ex) {
+            log(ex);
+            throw new Error('Er is iets mis gegaan bij het ophalen van de flaggedAt assignments');
+        }
+    }
+
+    /**
+     * Returns all assignments that were exclusively flagResolvedAt by a user
+     * @return {Promise<void>}
+     */
+    async getAllFlagResolvedAt() {
+        try {
+            return await AssignmentRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: true}});
+        } catch (ex) {
+            log(ex);
+            throw new Error('Er is iets mis gegaan bij het ophalen van de flagResolvedAt assignments');
+        }
+    }
+
+        /**
+     * Returns all assignments that were exclusively deletedAt by a user
+     * @return {Promise<void>}
+     */
+    async getAllDeletedAt() {
+        try {
+            return await AssignmentRepository.readAll({deletedAt: {$exists: true}});
+        } catch (ex) {
+            log(ex);
+            throw new Error('Er is iets mis gegaan bij het ophalen van de deletedAt assignments');
+        }
+    }
+
     async create(data) {
         try {
             return await AssignmentRepository.create(data);

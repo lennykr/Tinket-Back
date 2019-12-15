@@ -50,6 +50,9 @@ router.delete('/skills/:id', [auth, admin], SkillController.delete);
 
 
 // -- Assignments --
+router.get('/assignments/flaggedAt', [auth, admin], AssignmentController.getAllFlaggedAt);
+router.get('/assignments/flagResolvedAt', [auth, admin], AssignmentController.getAllFlagResolvedAt);
+router.get('/assignments/deletedAt', [auth, admin], AssignmentController.getAllDeletedAt);
 router.get('/assignments', [auth, admin], AssignmentController.showAll.bind(AssignmentController));
 router.post('/assignments', [auth, company], AssignmentController.create.bind(AssignmentController));
 router.get('/assignments/:id', auth, AssignmentController.show);

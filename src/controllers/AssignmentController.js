@@ -19,6 +19,33 @@ class AssignmentController {
         };
     }
 
+    /**
+     * (Admin) get all exclusively flagged assignments
+     * @param req
+     * @param res
+     */
+    getAllFlaggedAt(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.getAllFlaggedAt());
+    }
+
+    /**
+     * (Admin) get all exclusively flagResolvedAt assignments
+     * @param req
+     * @param res
+     */
+    getAllFlagResolvedAt(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.getAllFlagResolvedAt());
+    }
+
+    /**
+     * (Admin) get all exclusively deletedAt assignments
+     * @param req
+     * @param res
+     */
+    getAllDeletedAt(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.getAllDeletedAt());
+    }
+
     show(req, res){
         promiseResponseHelper(req, res, AssignmentService.showById(req.params.id));
     }
