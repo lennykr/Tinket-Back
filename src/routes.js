@@ -63,9 +63,9 @@ router.get('/reviews', [auth, admin], ReviewController.getAll);
 router.post('/reviews', auth, ReviewController.add);
 router.get('/reviews/:id', auth, ReviewController.get);
 router.delete('/reviews/:id', auth, ReviewController.delete);
-router.post('/reviews/:id/flag', auth, ReviewController.flag);
-router.post('/reviews/:id/flag/resolve', [auth, admin], ReviewController.resolveFlag);
-router.post('/reviews/:id/flag/ignore', [auth, admin], ReviewController.resolveFlag);
+router.get('/reviews/:id/flag', auth, ReviewController.flag);
+router.get('/reviews/:id/flag/resolve', [auth, admin], ReviewController.resolveFlag);
+router.get('/reviews/:id/flag/ignore', [auth, admin], ReviewController.resolveFlag);
 
 
 // -- Applications --
