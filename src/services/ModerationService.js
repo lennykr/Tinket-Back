@@ -41,7 +41,7 @@ class ModerationService {
      */
     async ignoreFlagged(id) {
         try {
-            await this.repo.moderate(id, {ignoredAt: new Date()});
+            await this.repo.moderate(id, {deletedAt: new Date()});
         } catch (ex) {
             log(ex);
             throw new Error('Er is iets mis gegaan bij het negeren van een flag');

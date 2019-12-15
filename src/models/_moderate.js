@@ -13,7 +13,7 @@ const moderate = {
     deletedAt: {
         type: Schema.Types.Date,
         required: false,
-    },
+    }
 };
 
 module.exports = moderate;

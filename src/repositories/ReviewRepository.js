@@ -6,7 +6,8 @@ class ReviewRepository extends BaseRepository {
 
     readAll(filter = {}, sort) {
         return this.model.find(filter).sort('-' + sort)
-        .populate('reviewed');
+        .populate('reviewed')
+        .populate('creator.user');
     }
 
     /**
