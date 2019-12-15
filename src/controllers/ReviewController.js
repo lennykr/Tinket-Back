@@ -13,6 +13,33 @@ class ReviewController {
     }
 
     /**
+     * (Admin) get all exclusively flagged reviews
+     * @param req
+     * @param res
+     */
+    getAllFlaggedAt(req, res) {
+        promiseResponseHelper(req, res, ReviewService.getAllFlaggedAt());
+    }
+
+    /**
+     * (Admin) get all exclusively flagResolvedAt reviews
+     * @param req
+     * @param res
+     */
+    getAllFlagResolvedAt(req, res) {
+        promiseResponseHelper(req, res, ReviewService.getAllFlagResolvedAt());
+    }
+    
+    /**
+     * (Admin) get all exclusively deletedAt reviews
+     * @param req
+     * @param res
+     */
+    getAllDeletedAt(req, res) {
+        promiseResponseHelper(req, res, ReviewService.getAllDeletedAt());
+    }
+
+    /**
      * Create a new review
      * @param req
      * @param res

@@ -16,10 +16,49 @@ class ReviewService extends ModerationService {
     async getAllFlagged() {
         try {
             // TODO: only get flagged reviews
-            return await ReviewRepository.readAll({deletedAt: {$exists: false}});
+            return await ReviewRepository.readAll({deletedAt: {$exists: false}}, "flaggedAt");
         } catch (ex) {
             log(ex);
             throw new Error('Er is iets mis gegaan bij het ophalen van alle skills');
+        }
+    }
+
+    /**
+     * Returns all reviews that were exclusively flagged by a user
+     * @return {Promise<void>}
+     */
+    async getAllFlaggedAt() {
+        try {
+            return await ReviewRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: false}}, "flaggedAt");
+        } catch (ex) {
+            log(ex);
+            throw new Error('Er is iets mis gegaan bij het ophalen van de flaggedAt reviews');
+        }
+    }
+
+    /**
+     * Returns all reviews that were exclusively flagResolvedAt by a user
+     * @return {Promise<void>}
+     */
+    async getAllFlagResolvedAt() {
+        try {
+            return await ReviewRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: true}}, "flagResolvedAt");
+        } catch (ex) {
+            log(ex);
+            throw new Error('Er is iets mis gegaan bij het ophalen van de flaggedAt reviews');
+        }
+    }
+
+        /**
+     * Returns all reviews that were exclusively deletedAt by a user
+     * @return {Promise<void>}
+     */
+    async getAllDeletedAt() {
+        try {
+            return await ReviewRepository.readAll({deletedAt: {$exists: true}, flagResolvedAt: {$exists: true}}, "deletedAt");
+        } catch (ex) {
+            log(ex);
+            throw new Error('Er is iets mis gegaan bij het ophalen van de flaggedAt reviews');
         }
     }
 

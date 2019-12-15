@@ -4,8 +4,8 @@ const BaseRepository = require('./BaseRepository');
 class ReviewRepository extends BaseRepository {
     constructor() {super(Review);}
 
-    readAll(filter = {}) {
-        return this.model.find(filter);
+    readAll(filter = {}, sort) {
+        return this.model.find(filter).sort('-' + sort);
     }
 
     /**

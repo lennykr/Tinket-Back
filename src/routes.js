@@ -26,7 +26,10 @@ router.put('/users/:id', [auth, validateAdminOrUserId], UserController.update.bi
 router.delete('/users/:id', [auth, validateAdminOrUserId], UserController.delete);
 router.put('/users/:id/skills', auth, UserController.updateMySkills);
 
+// assignments a company has created
 router.get('/users/:id/assignments', [auth, company, validateAdminOrUserId], AssignmentController.showForUser);
+// recommended assignments for a user
+router.get('/users/:id/assignments/discover', [auth, validateAdminOrUserId], AssignmentController.showRecommendedForUser);
 router.get('/users/:id/reviews', auth, ReviewController.getUserReviews);
 router.get('/users/:id/writtenReviews', auth, ReviewController.getWrittenReviews);
 router.get('/users/:id/applications', [auth, validateAdminOrUserId], ApplicationController.showForUser);
@@ -60,12 +63,15 @@ router.get('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.r
 
 // -- Reviews --
 router.get('/reviews', [auth, admin], ReviewController.getAll);
+router.get('/reviews/flaggedAt', [auth, admin], ReviewController.getAllFlaggedAt);
+router.get('/reviews/flagResolvedAt', [auth, admin], ReviewController.getAllFlagResolvedAt);
+router.get('/reviews/deletedAt', [auth, admin], ReviewController.getAllDeletedAt);
 router.post('/reviews', auth, ReviewController.add);
 router.get('/reviews/:id', auth, ReviewController.get);
 router.delete('/reviews/:id', auth, ReviewController.delete);
 router.get('/reviews/:id/flag', auth, ReviewController.flag);
 router.get('/reviews/:id/flag/resolve', [auth, admin], ReviewController.resolveFlag);
-router.get('/reviews/:id/flag/ignore', [auth, admin], ReviewController.resolveFlag);
+router.get('/reviews/:id/flag/ignore', [auth, admin], ReviewController.ignoreFlag);
 
 
 // -- Applications --
