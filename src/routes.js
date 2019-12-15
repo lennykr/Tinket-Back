@@ -53,9 +53,9 @@ router.post('/assignments', [auth, company], AssignmentController.create.bind(As
 router.get('/assignments/:id', auth, AssignmentController.show);
 router.put('/assignments/:id', [auth, adminOrCompany], AssignmentController.update.bind(AssignmentController));
 router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
-router.put('/assignments/:id/flag', auth, AssignmentController.flag);
-router.put('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
-router.put('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.resolveFlag);
+router.get('/assignments/:id/flag', auth, AssignmentController.flag);
+router.get('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
+router.get('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.resolveFlag);
 
 
 // -- Reviews --
