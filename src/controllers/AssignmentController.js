@@ -23,6 +23,10 @@ class AssignmentController {
         promiseResponseHelper(req, res, AssignmentService.showById(req.params.id));
     }
 
+    showAll(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.showAll());
+    }
+
     create(req, res) {
         promiseResponseHelper(req, res, AssignmentService.create(this._toAssignmentPayload(req)));
     }
@@ -45,6 +49,18 @@ class AssignmentController {
         //       company? - > show my created assignments
         //       admin? -> show assignments a company has created
         promiseResponseHelper(req, res, AssignmentService.getAll(req.params.id));
+    }
+
+    flag(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.flag(req.params.id));
+    }
+
+    resolveFlag(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.resolveFlagged(req.params.id));
+    }
+
+    ignoreFlag(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.ignoreFlagged(req.params.id));
     }
 }
 

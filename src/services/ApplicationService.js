@@ -40,6 +40,24 @@ class ApplicationService {
         }
     }
 
+    async getByMaker(id) {
+        try {
+            return await ApplicationRepository.readEverythingWhere({maker: id}, 'assignment');
+        } catch (ex) {
+            log(ex);
+            throw new Error('Verwijderen van een application is mislukt');
+        }
+    }
+
+    async getByAssignment(id) {
+        try {
+            return await ApplicationRepository.readEverythingWhere({assignment: id}, 'maker');
+        } catch (ex) {
+            log(ex);
+            throw new Error('Ophalen van een applications is mislukt');
+        }
+    }
+
     async updateApplication(id, application) {
         try {
             await ApplicationRepository.update(id, application);

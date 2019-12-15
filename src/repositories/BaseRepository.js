@@ -56,6 +56,24 @@ class BaseRepository {
         const result = await this.model.updateOne({ _id: objectId}, { $set: data });
         return result.n > 0;
     }
+
+    /**
+     * Update the 'moderate' fields in a document (if any)
+     * @param objectId
+     * @param data
+     * @return {Promise<boolean>}
+     */
+    async moderate(objectId, data) {
+        // create a filter that makes sures that specified data fields are only updated if they are NOT set yet
+        // example: flaggedAt will only be modified if its current value is null
+        const filter = {};
+        Object.keys(data).map((key) => {
+            filter[key] = {$eq: null};
+        });
+
+        const result = await this.model.updateOne({ _id: objectId, ...filter}, { $set: data });
+        return result.n > 0;
+    }
 }
 
 module.exports = BaseRepository;

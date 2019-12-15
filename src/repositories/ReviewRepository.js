@@ -34,7 +34,8 @@ class ReviewRepository extends BaseRepository {
     }
 
     findWrittenReviews(userId) {
-        return this.model.find({'creator.user': userId});
+        return this.model.find({'creator.user': userId})
+            .populate({ path: 'creator.user', model: 'User'});
     }
 }
 

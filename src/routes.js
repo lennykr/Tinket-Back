@@ -26,12 +26,11 @@ router.put('/users/:id', [auth, validateAdminOrUserId], UserController.update.bi
 router.delete('/users/:id', [auth, validateAdminOrUserId], UserController.delete);
 router.put('/users/:id/skills', auth, UserController.updateMySkills);
 
-// GET /users/:id/skills (skillController#showForUser) Admin, Me as maker
 router.get('/users/:id/assignments', [auth, company, validateAdminOrUserId], AssignmentController.showForUser);
 router.get('/users/:id/reviews', auth, ReviewController.getUserReviews);
 router.get('/users/:id/writtenReviews', auth, ReviewController.getWrittenReviews);
-// GET /users/:id/applications (applicationController#showForUser) Admin, Me as Maker
-// GET /assignments/:id/applications (applicationController#showForAssignment) Auth
+router.get('/users/:id/applications', [auth, validateAdminOrUserId], ApplicationController.showForUser);
+router.get('/assignments/:id/applications', auth, ApplicationController.showForAssignment);
 router.post('/users/:id/applications', auth, ApplicationController.submit);
 
 router.put('/users/:id/maker-profile', [auth, validateAdminOrUserId], UserController.updateMyMakerProfile.bind(UserController));
@@ -49,11 +48,14 @@ router.delete('/skills/:id', [auth, admin], SkillController.delete);
 
 
 // -- Assignments --
-// GET /assignments (skillController#index) Admin
+router.get('/assignments', [auth, admin], AssignmentController.showAll.bind(AssignmentController));
 router.post('/assignments', [auth, company], AssignmentController.create.bind(AssignmentController));
 router.get('/assignments/:id', auth, AssignmentController.show);
 router.put('/assignments/:id', [auth, adminOrCompany], AssignmentController.update.bind(AssignmentController));
 router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
+router.get('/assignments/:id/flag', auth, AssignmentController.flag);
+router.get('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
+router.get('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.resolveFlag);
 
 
 // -- Reviews --
@@ -61,6 +63,9 @@ router.get('/reviews', [auth, admin], ReviewController.getAll);
 router.post('/reviews', auth, ReviewController.add);
 router.get('/reviews/:id', auth, ReviewController.get);
 router.delete('/reviews/:id', auth, ReviewController.delete);
+router.post('/reviews/:id/flag', auth, ReviewController.flag);
+router.post('/reviews/:id/flag/resolve', [auth, admin], ReviewController.resolveFlag);
+router.post('/reviews/:id/flag/ignore', [auth, admin], ReviewController.resolveFlag);
 
 
 // -- Applications --
@@ -73,9 +78,12 @@ router.delete('/applications/:id', auth, ApplicationController.delete);
 router.post('/admins', [auth, admin], UserController.createAdmin);
 router.post('/mail', auth, UserController.sendMail);
 
+<<<<<<< HEAD
 // NOTES
 // TODO: resolve flagged reviews (admin)
 // TODO: flag a review (user)
 
 
+=======
+>>>>>>> 93c1ed145e214bfa7fec151f54ecc9f6c18062c0
 module.exports = router;

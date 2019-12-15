@@ -1,7 +1,13 @@
 const {log} = require('../helpers');
 const {AssignmentRepository} = require('../repositories/index');
+const ModerationService = require('./ModerationService');
 
-class AssignmentService {
+class AssignmentService extends ModerationService {
+
+    constructor() {
+        super(AssignmentRepository);
+    }
+
     async create(data) {
         try {
             return await AssignmentRepository.create(data);
@@ -53,6 +59,15 @@ class AssignmentService {
         }catch (ex) {
             log (ex);
             throw new Error('Ophalen van een assignment is mislukt');
+        }
+    }
+
+    async showAll(){
+        try{
+            return await AssignmentRepository.readAllWhere({});
+        }catch (ex) {
+            log (ex);
+            throw new Error('Ophalen van assignments is mislukt');
         }
     }
 }

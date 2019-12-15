@@ -47,6 +47,18 @@ class ReviewController {
         promiseResponseHelper(req, res, ReviewService.getWrittenReviews(req.params.id));
     }
 
+    flag(req, res) {
+        promiseResponseHelper(req, res, ReviewService.flag(req.params.id));
+    }
+
+    resolveFlag(req, res) {
+        promiseResponseHelper(req, res, ReviewService.resolveFlagged(req.params.id));
+    }
+
+    ignoreFlag(req, res) {
+        promiseResponseHelper(req, res, ReviewService.ignoreFlagged(req.params.id));
+    }
+
 }
 
 module.exports = ReviewController;
