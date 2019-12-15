@@ -26,7 +26,6 @@ router.put('/users/:id', [auth, validateAdminOrUserId], UserController.update.bi
 router.delete('/users/:id', [auth, validateAdminOrUserId], UserController.delete);
 router.put('/users/:id/skills', auth, UserController.updateMySkills);
 
-// GET /users/:id/skills (skillController#showForUser) Admin, Me as maker
 router.get('/users/:id/assignments', [auth, company, validateAdminOrUserId], AssignmentController.showForUser);
 router.get('/users/:id/reviews', auth, ReviewController.getUserReviews);
 router.get('/users/:id/writtenReviews', auth, ReviewController.getWrittenReviews);
@@ -54,9 +53,9 @@ router.post('/assignments', [auth, company], AssignmentController.create.bind(As
 router.get('/assignments/:id', auth, AssignmentController.show);
 router.put('/assignments/:id', [auth, adminOrCompany], AssignmentController.update.bind(AssignmentController));
 router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
-router.post('/assignments/:id/flag', auth, AssignmentController.flag);
-router.post('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
-router.post('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.resolveFlag);
+router.put('/assignments/:id/flag', auth, AssignmentController.flag);
+router.put('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
+router.put('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.resolveFlag);
 
 
 // -- Reviews --
