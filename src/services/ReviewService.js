@@ -1,8 +1,14 @@
 const {BadRequestError} = require("../exceptions");
 const {log} = require('../helpers');
 const {ReviewRepository} = require('../repositories/index');
+const ModerationService = require('./ModerationService');
 
-class ReviewService {
+class ReviewService extends ModerationService {
+
+    constructor() {
+        super(ReviewRepository);
+    }
+
     /**
      * Returns all reviews that were flagged by a user
      * @return {Promise<void>}
@@ -76,7 +82,6 @@ class ReviewService {
         }
 
     }
-
 }
 
 module.exports = ReviewService;

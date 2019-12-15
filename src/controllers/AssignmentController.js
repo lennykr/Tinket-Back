@@ -46,6 +46,18 @@ class AssignmentController {
         //       admin? -> show assignments a company has created
         promiseResponseHelper(req, res, AssignmentService.getAll(req.params.id));
     }
+
+    flag(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.flag(req.params.id));
+    }
+
+    resolveFlag(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.resolveFlagged(req.params.id));
+    }
+
+    ignoreFlag(req, res) {
+        promiseResponseHelper(req, res, AssignmentService.ignoreFlagged(req.params.id));
+    }
 }
 
 module.exports = AssignmentController;

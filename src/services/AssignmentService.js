@@ -1,7 +1,13 @@
 const {log} = require('../helpers');
 const {AssignmentRepository} = require('../repositories/index');
+const ModerationService = require('./ModerationService');
 
-class AssignmentService {
+class AssignmentService extends ModerationService {
+
+    constructor() {
+        super(AssignmentRepository);
+    }
+
     async create(data) {
         try {
             return await AssignmentRepository.create(data);

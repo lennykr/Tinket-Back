@@ -54,6 +54,9 @@ router.post('/assignments', [auth, company], AssignmentController.create.bind(As
 router.get('/assignments/:id', auth, AssignmentController.show);
 router.put('/assignments/:id', [auth, adminOrCompany], AssignmentController.update.bind(AssignmentController));
 router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
+router.get('/assignments/:id/flag', auth, AssignmentController.flag);
+router.get('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
+router.get('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.resolveFlag);
 
 
 // -- Reviews --
@@ -61,6 +64,9 @@ router.get('/reviews', [auth, admin], ReviewController.getAll);
 router.post('/reviews', auth, ReviewController.add);
 router.get('/reviews/:id', auth, ReviewController.get);
 router.delete('/reviews/:id', auth, ReviewController.delete);
+router.get('/reviews/:id/flag', auth, ReviewController.flag);
+router.get('/reviews/:id/flag/resolve', [auth, admin], ReviewController.resolveFlag);
+router.get('/reviews/:id/flag/ignore', [auth, admin], ReviewController.resolveFlag);
 
 
 // -- Applications --
@@ -71,9 +77,5 @@ router.delete('/applications/:id', auth, ApplicationController.delete);
 
 // -- Others --
 router.post('/admins', [auth, admin], UserController.createAdmin);
-
-// NOTES
-// TODO: resolve flagged reviews (admin)
-// TODO: flag a review (user)
 
 module.exports = router;
