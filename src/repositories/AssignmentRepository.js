@@ -1,6 +1,7 @@
 // this import is required for .populate() to work
 const Skill = require('../models/Skill');
 const Assignment = require('../models/Assignment');
+const Application = require('../models/Application');
 const BaseRepository = require('./BaseRepository');
 
 class AssignmentRepository extends BaseRepository {

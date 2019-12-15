@@ -1,6 +1,7 @@
 const {log, errorResponse, promiseResponseHelper} = require('../helpers');
 const {UserRepository} = require('../repositories/index');
 const {UserService} = require('../services/index');
+const nodemailer = require('nodemailer');
 
 module.exports = class UserController {
     /**
@@ -73,6 +74,33 @@ module.exports = class UserController {
             firstname: req.user.firstname,
             lastname: req.user.lastname
         }
+    }
+
+    sendMail(req, res){
+        const transport = nodemailer.createTransport({
+            host: "smtp.mailtrap.io",
+            port: 2525,
+            auth: {
+              user: "a92898435572cc",
+              pass: "a75a9bd72bf5f2"
+            }
+          });
+        
+        const mailOptions = {
+            from: "Tinket Security <security@tinket.com>",
+            to: req.body.email,
+            subject: req.body.subject,
+            html: req.body.html
+        };
+
+        transport.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message sent: %s', info.messageId);
+         });
+
+         return true;
     }
 
     /**
