@@ -14,6 +14,13 @@ class ApplicationRepository extends BaseRepository {
                     path: 'requiredSkills',
                     model: 'Skill'
                 }
+            })
+            .populate({
+                path: 'assignment',
+                populate: {
+                    path: 'createdBy',
+                    model: 'User'
+                }
             });
     }
 
