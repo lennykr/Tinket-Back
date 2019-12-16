@@ -8,7 +8,13 @@ class ApplicationRepository extends BaseRepository {
     readInclEverything(id) {
         return this.model.findById(id)
             .populate('maker')
-            .populate('assignment');
+            .populate({
+                path: 'assignment',
+                populate: {
+                    path: 'requiredSkills',
+                    model: 'Skill'
+                }
+            });
     }
 
     readEverythingWhere(filter, ...toPopulate) {
