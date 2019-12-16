@@ -11,8 +11,9 @@ class ApplicationService {
         if (!user.isAdmin && user.isCompany())
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
+        const existingApplications = await ApplicationRepository.readMakerApplication(application.maker, application.assignment)
         try {
-            if(await ApplicationRepository.readMakerApplication(application.maker, application.assignment) == [])
+            if(existingApplications[0] == null)
                 return await ApplicationRepository.create(application);
             throw new Error('Je hebt al een applicatie ingestuurd voor deze assignment!');
         } catch (ex) {
