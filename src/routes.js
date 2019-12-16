@@ -5,12 +5,14 @@ const company = require('./middleware/company');
 const admin = require('./middleware/admin');
 const validateAdminOrUserId = require('./middleware/validators/validateAdminOrUserId');
 const adminOrCompany = require('./middleware/companyOrAdmin');
+const {multipartUpload, videoConvert} = require('./middleware/upload');
 const {
     UserController,
     AssignmentController,
     SkillController,
     ReviewController,
-    ApplicationController
+    ApplicationController,
+    UploadController
 } = require('./controllers/index');
 
 /********************************/
@@ -87,5 +89,10 @@ router.delete('/applications/:id', auth, ApplicationController.delete);
 // -- Others --
 router.post('/admins', [auth, admin], UserController.createAdmin);
 router.post('/mail', auth, UserController.sendMail);
+
+// -- Video Uploads --
+router.post('/upload', [auth, company, multipartUpload, videoConvert], UploadController.uploadVideo);
+router.post('/upload/:id', UploadController.onUploadDone); // NOTE: this route is used by cloudinary CDN - DO NOT ADD auth!
+router.get('/upload/:id', [auth, company], UploadController.getUploaded.bind(UploadController));
 
 module.exports = router;

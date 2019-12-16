@@ -4,6 +4,7 @@ const SkillService = require('./SkillService');
 const MediaService = require('./MediaService');
 const ReviewService = require('./ReviewService');
 const ApplicationService = require('./ApplicationService');
+const UploadService = require('./UploadService');
 
 module.exports = {
     UserService: new UserService(),
@@ -11,5 +12,6 @@ module.exports = {
     SkillService: new SkillService(),
     MediaService: new MediaService(),
     ReviewService: new ReviewService(),
-    ApplicationService: new ApplicationService()
+    ApplicationService: new ApplicationService(),
+    UploadService: new UploadService()
 };
