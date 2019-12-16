@@ -24,7 +24,7 @@ const {
 router.get('/users', [auth, admin], UserController.getAllUsers);
 router.post('/users/login', UserController.login);
 router.post('/users', UserController.register.bind(UserController));
-router.get('/users/:id', [auth, validateAdminOrUserIdOrCompany], UserController.show);
+router.get('/users/:id', auth, UserController.show); // TODO: :)
 router.put('/users/:id', [auth, validateAdminOrUserId], UserController.update.bind(UserController));
 router.delete('/users/:id', [auth, validateAdminOrUserId], UserController.delete);
 router.put('/users/:id/skills', auth, UserController.updateMySkills);
