@@ -1,4 +1,3 @@
-const BadRequestError = require("../exceptions").BadRequestError;
 const {promiseResponseHelper} = require('../helpers');
 const {ReviewService} = require('../services/index');
 

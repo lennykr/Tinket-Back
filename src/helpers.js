@@ -9,17 +9,21 @@ const sendSuccess = (req, res, data) => {
 };
 
 const sendError = (req, res, error) => {
-    res.status(error.statusCode || 500).send({
-        message: error.message
+    const statusCode = error.statusCode || 500;
+
+    if (process.env.APP_ENV !== undefined && process.env.APP_ENV.startsWith('prod'))
+    {
+        res.status(statusCode).send({message: statusCode == 500 ? 'Er is iets mis gegeaan' : error.message});
+        return;
+    }
+
+    console.error(error);
+    res.status(statusCode).send({
+        message: error.message,
+        stack: error.stack
     });
 };
 
-const log = (message) => {
-    if(process.env.APP_ENV !== "production") console.error(message);
-};
-
 module.exports = {
-    promiseResponseHelper,
-    sendSuccess,
-    log
+    promiseResponseHelper
 };

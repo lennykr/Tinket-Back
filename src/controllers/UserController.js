@@ -1,5 +1,4 @@
-const {log, errorResponse, promiseResponseHelper} = require('../helpers');
-const {UserRepository} = require('../repositories/index');
+const {promiseResponseHelper} = require('../helpers');
 const {UserService} = require('../services/index');
 const nodemailer = require('nodemailer');
 
@@ -85,7 +84,7 @@ module.exports = class UserController {
               pass: "a75a9bd72bf5f2"
             }
           });
-        
+
         const mailOptions = {
             from: "Tinket Security <security@tinket.com>",
             to: req.body.email,

@@ -1,5 +1,4 @@
 const {BadRequestError} = require("../exceptions");
-const {log} = require('../helpers');
 const {ReviewRepository} = require('../repositories/index');
 const ModerationService = require('./ModerationService');
 
@@ -14,13 +13,8 @@ class ReviewService extends ModerationService {
      * @return {Promise<void>}
      */
     async getAllFlagged() {
-        try {
-            // TODO: only get flagged reviews
-            return await ReviewRepository.readAll({deletedAt: {$exists: false}}, "flaggedAt");
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van alle skills');
-        }
+        // TODO: only get flagged reviews
+        return await ReviewRepository.readAll({deletedAt: {$exists: false}}, "flaggedAt");
     }
 
     /**
@@ -28,12 +22,7 @@ class ReviewService extends ModerationService {
      * @return {Promise<void>}
      */
     async getAllFlaggedAt() {
-        try {
-            return await ReviewRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: false}, flaggedAt: {$exists: true}}, "flaggedAt");
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van de flaggedAt reviews');
-        }
+        return await ReviewRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: false}, flaggedAt: {$exists: true}}, "flaggedAt");
     }
 
     /**
@@ -41,25 +30,15 @@ class ReviewService extends ModerationService {
      * @return {Promise<void>}
      */
     async getAllFlagResolvedAt() {
-        try {
-            return await ReviewRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: true}}, "flagResolvedAt");
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van de flaggedAt reviews');
-        }
+        return await ReviewRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: true}}, "flagResolvedAt");
     }
 
-        /**
+    /**
      * Returns all reviews that were exclusively deletedAt by a user
      * @return {Promise<void>}
      */
     async getAllDeletedAt() {
-        try {
-            return await ReviewRepository.readAll({deletedAt: {$exists: true}}, "deletedAt");
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van de flaggedAt reviews');
-        }
+        return await ReviewRepository.readAll({deletedAt: {$exists: true}}, "deletedAt");
     }
 
     /**
@@ -77,49 +56,23 @@ class ReviewService extends ModerationService {
         if (await ReviewRepository.hasReviewed(reviewerId, review.creator.user))
             throw new BadRequestError('Je hebt al een review geschreven!');
 
-        try {
-            return await ReviewRepository.create(review);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het aanmaken van deze review');
-        }
+        return await ReviewRepository.create(review);
     }
 
     async getReview(id) {
-        try {
-            return await ReviewRepository.readInclCreator(id);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van deze review');
-        }
+        return await ReviewRepository.readInclCreator(id);
     }
 
     async deleteReview(id) {
-        try {
-            await ReviewRepository.delete(id);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het verwijderen van deze review');
-        }
+        await ReviewRepository.delete(id);
     }
 
     async getUserReviews(userId) {
-        try {
-            return await ReviewRepository.findReceivedReviews(userId);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van reviews');
-        }
+        return await ReviewRepository.findReceivedReviews(userId);
     }
 
     async getWrittenReviews(userId) {
-        try {
-            return await ReviewRepository.findWrittenReviews(userId);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van reviews');
-        }
-
+        return await ReviewRepository.findWrittenReviews(userId);
     }
 }
 

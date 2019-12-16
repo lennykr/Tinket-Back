@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 const cors = require('cors');
-const { log } = require('./helpers');
 
 require('dotenv').config();
 
@@ -30,9 +29,8 @@ app.get('/', function (req, res) {
 
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true })
     .then(() => {
-        log('Connected to database!');
         app.listen(process.env.PORT, () => {
-            log(`Listening on http://127.0.0.1:${process.env.PORT}`);
+            console.log(`Listening on http://127.0.0.1:${process.env.PORT}`);
         });
     })
     .catch((err) => console.error(`Failed to connect to database. Error: ` + err));

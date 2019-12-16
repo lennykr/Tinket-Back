@@ -12,12 +12,7 @@ class ModerationService {
      * @return {Promise<void>}
      */
     async flag(id) {
-        try {
-            await this.repo.moderate(id, {flaggedAt: new Date()});
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het flaggen');
-        }
+        await this.repo.moderate(id, {flaggedAt: new Date()});
     }
 
     /**
@@ -26,12 +21,7 @@ class ModerationService {
      * @return {Promise<void>}
      */
     async resolveFlagged(id) {
-        try {
-            await this.repo.moderate(id, {flagResolvedAt: new Date()});
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het oplossen van een flag');
-        }
+        await this.repo.moderate(id, {flagResolvedAt: new Date()});
     }
 
     /**
@@ -41,12 +31,7 @@ class ModerationService {
      * @return {Promise<void>}
      */
     async ignoreFlagged(id, undo = false) {
-        try {
-            await this.repo.moderate(id, undo ? {$unset: {deletedAt: 1}, $set: {flagResolvedAt: new Date()}} : {deletedAt: new Date()}, undo);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het negeren van een flag');
-        }
+        await this.repo.moderate(id, undo ? {$unset: {deletedAt: 1}, $set: {flagResolvedAt: new Date()}} : {deletedAt: new Date()}, undo);
     }
 }
 
