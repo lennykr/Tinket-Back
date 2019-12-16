@@ -14,6 +14,7 @@ class ApplicationService {
             return await ApplicationRepository.create(application);
 
         throw new Error('Je hebt al een applicatie ingestuurd voor deze assignment!');
+
     }
 
     async delete(user, id) {
