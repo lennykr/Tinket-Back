@@ -81,7 +81,6 @@ router.get('/reviews/:id/flag/ignore/undo', [auth, admin], ReviewController.undo
 
 
 // -- Applications --
-// TODO: validation, security
 router.get('/applications/:id', auth, ApplicationController.show);
 router.put('/applications/:id', auth, ApplicationController.update);
 router.delete('/applications/:id', auth, ApplicationController.delete);
