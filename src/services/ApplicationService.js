@@ -1,6 +1,5 @@
-const BadRequestError = require("../exceptions").BadRequestError;
+const {BadRequestError} = require("../exceptions");
 const {ApplicationRepository} = require('../repositories/index');
-const {log} = require('../helpers');
 
 class ApplicationService {
     getAssignmentApplications(assignmentId) {
@@ -11,62 +10,33 @@ class ApplicationService {
         if (!user.isAdmin && user.isCompany())
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
-        try {
-            if(await ApplicationRepository.readMakerApplication(application.maker, application.assignment) == [])
-                return await ApplicationRepository.create(application);
-            throw new Error('Je hebt al een applicatie ingestuurd voor deze assignment!');
-        } catch (ex) {
-            log(ex);
-            throw new Error('Toevoegen van een application is mislukt');
-        }
+        if(await ApplicationRepository.readMakerApplication(application.maker, application.assignment) == [])
+            return await ApplicationRepository.create(application);
+
+        throw new Error('Je hebt al een applicatie ingestuurd voor deze assignment!');
     }
 
     async delete(user, id) {
         if (!user.isAdmin && user.isCompany())
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
-        try {
-            await ApplicationRepository.delete(id);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Verwijderen van een application is mislukt');
-        }
+        await ApplicationRepository.delete(id);
     }
 
     async get(id) {
-        try {
-            return await ApplicationRepository.readInclEverything(id);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Verwijderen van een application is mislukt');
-        }
+        return await ApplicationRepository.readInclEverything(id);
     }
 
     async getByMaker(id) {
-        try {
-            return await ApplicationRepository.readEverythingWhere({maker: id}, 'assignment');
-        } catch (ex) {
-            log(ex);
-            throw new Error('Verwijderen van een application is mislukt');
-        }
+        return await ApplicationRepository.readEverythingWhere({maker: id}, 'assignment');
     }
 
     async getByAssignment(id) {
-        try {
-            return await ApplicationRepository.readEverythingWhere({assignment: id}, 'maker');
-        } catch (ex) {
-            log(ex);
-            throw new Error('Ophalen van een applications is mislukt');
-        }
+        return await ApplicationRepository.readEverythingWhere({assignment: id}, 'maker');
     }
 
     async updateApplication(id, application) {
-        try {
-            await ApplicationRepository.update(id, application);
-        } catch (ex) {
-            log(ex);
-            throw new Error('Toevoegen van een application is mislukt');
-        }
+        await ApplicationRepository.update(id, application);
     }
 }
 

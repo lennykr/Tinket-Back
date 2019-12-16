@@ -1,43 +1,32 @@
-const {log} = require('../helpers');
 const {UserRepository} = require('../repositories/index');
-const {BadRequestError, InternalServerError} = require('../exceptions');
+const {BadRequestError} = require('../exceptions');
 const {compare} = require('bcrypt');
 
 class UserService {
     async show(id) {
-        try {
-            return (await UserRepository.readWithSkills(id));
-        }
-        catch(ex) {
-            log(ex);
-            throw new BadRequestError('Account gegevens niet beschikbaar.');
-        }
+        return await UserRepository.readWithSkills(id);
     }
 
     async register(data) {
         try {
             await UserRepository.create(data);
-            return this.login(data.email, data.password);
         }
         catch(ex) {
-            log(ex);
-            throw new BadRequestError('Account bestaat al!');
+            if (ex.code == 11000)
+                throw new BadRequestError('Email bestaal al!');
+            else
+                throw ex;
         }
+        return this.login(data.email, data.password);
     }
 
     async login(email, password) {
         const user = await UserRepository.findByCredentials(email, password);
-        try {
-            const token = await user.generateAuthToken();
-            return {
-                user: await UserRepository.read(user._id),  // Pass the user object without password & token fields.
-                token
-            };
-        }
-        catch (ex) {
-            log(ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het inloggen.');
-        }
+        const token = await user.generateAuthToken();
+        return {
+            user: await UserRepository.read(user._id),  // Pass the user object without password & token fields.
+            token
+        };
     }
 
     /**
@@ -54,129 +43,56 @@ class UserService {
         if (user.isMaker() && profile.companyProfile)
             throw new BadRequestError('Je hebt een bedrijfsaccount nodig om deze actie uit te voeren!');
 
-        try {
-            await UserRepository.update(id, profile);
-        }
-        catch (ex) {
-            log(ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
-        }
+        await UserRepository.update(id, profile);
     }
 
     async updateSkills(id, skills) {
-        try {
-            await UserRepository.update(id, {'makerProfile.skills': skills});
-        }
-        catch (ex) {
-            log(ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je skills.');
-        }
+        await UserRepository.update(id, {'makerProfile.skills': skills});
     }
 
     async updateMakerProfile(id, user, makerProfile) {
         if (!user.isAdmin  && user.isCompany())
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
-        try {
-            await UserRepository.update(id, {  makerProfile });
-        }
-        catch (ex) {
-            log(ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
-        }
+        await UserRepository.update(id, {  makerProfile });
     }
 
     async updateCompanyProfile(id, user, companyProfile) {
         if (!user.isAdmin && user.isMaker())
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
-        try {
-            await UserRepository.update(id, {  companyProfile });
-        }
-        catch (ex) {
-            log(ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het bijwerken van je profiel.');
-        }
+        await UserRepository.update(id, { companyProfile });
     }
 
     async readAllReviews(){
-        try{
-            return await UserRepository.readAllReviews();
-        }
-        catch (ex) {
-            log (ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het ophalen van alle reviews.');
-        }
+        return await UserRepository.readAllReviews();
     }
 
     async readReviews(id){
-        try{
-            return await UserRepository.readReviews(id);
-        }
-        catch (ex){
-            log (ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het ophalen van de reviews.');
-        }
+        return await UserRepository.readReviews(id);
     }
 
     async addReview(id, review){
-        try{
-            await UserRepository.add(id, review);
-        }
-        catch (ex){
-            log (ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het toevoegen van een review.');
-        }
+        await UserRepository.add(id, review);
     }
 
     async addReviewFlag(userId, reviewId){
-        try{
-            await UserRepository.addReviewFlag(userId, reviewId);
-        }
-        catch (ex) {
-            log (ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het flaggen van een review.');
-        }
-
+        await UserRepository.addReviewFlag(userId, reviewId);
     }
 
     async deleteReviewFlag(userId, reviewId){
-        try{
-            await UserRepository.deleteReviewFlag(userId, reviewId);
-        }
-        catch (ex) {
-            log (ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het flaggen van een review.');
-        }
+        await UserRepository.deleteReviewFlag(userId, reviewId);
     }
 
     async deleteReview(userId, reviewId){
-        try{
-            await UserRepository.deleteReview(userId, reviewId);
-        }
-        catch (ex){
-            log (ex);
-            throw new InternalServerError('Er is iets mis gegaan tijdens het verwijderen van een review.');
-        }
+        await UserRepository.deleteReview(userId, reviewId);
     }
     async deleteTokens(id) {
-        try {
-           await UserRepository.update(id, {tokens: []});
-        }
-        catch (ex) {
-            log(ex);
-            throw new InternalServerError('Er is iets mis gegaan bij het verwijderen van je tokens.');
-        }
+        await UserRepository.update(id, {tokens: []});
     }
 
     async deleteUser(id) {
-        try {
-            await UserRepository.delete({_id: id});
-        }
-        catch (ex) {
-            log(ex);
-            throw new InternalServerError('Er is iets mis gegaan bij het verwijderen van deze user.');
-        }
+        await UserRepository.delete({_id: id});
     }
 
     async changePassword(id, oldPassword, newPassword) {
@@ -190,12 +106,7 @@ class UserService {
         if (!await compare(oldPassword, user.password))
             throw new BadRequestError('Onjuist wachtwoord!');
 
-        try {
-            UserRepository.update(id, {password: newPassword});
-        }
-        catch(ex) {
-            throw new InternalServerError('Er is iets fout gegaan bij het updaten van je password');
-        }
+        UserRepository.update(id, {password: newPassword});
     }
 
     /**
@@ -203,14 +114,8 @@ class UserService {
      * @return {Promise<void>}
      */
     async getAllUsers(exclAdmins = true) {
-        try{
-            const filter = exclAdmins ? [{isAdmin: null}, {isAdmin: false}] : [{}];
-            return await UserRepository.readAll({$or: filter});
-        }
-        catch (ex){
-            log (ex);
-            throw new InternalServerError('Er is iets mis gegaan bij het ophalen van alle users.');
-        }
+        const filter = exclAdmins ? [{isAdmin: null}, {isAdmin: false}] : [{}];
+        return await UserRepository.readAll({$or: filter});
     }
 }
 

@@ -1,4 +1,3 @@
-const {log} = require('../helpers');
 const {AssignmentRepository, UserRepository} = require('../repositories/index');
 const ModerationService = require('./ModerationService');
 
@@ -13,12 +12,7 @@ class AssignmentService extends ModerationService {
      * @return {Promise<void>}
      */
     async getAllFlaggedAt() {
-        try {
-            return await AssignmentRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: false}, flaggedAt: {$exists: true}});
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van de flaggedAt assignments');
-        }
+        return await AssignmentRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: false}, flaggedAt: {$exists: true}});
     }
 
     /**
@@ -26,12 +20,7 @@ class AssignmentService extends ModerationService {
      * @return {Promise<void>}
      */
     async getAllFlagResolvedAt() {
-        try {
-            return await AssignmentRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: true}});
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van de flagResolvedAt assignments');
-        }
+        return await AssignmentRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: true}});
     }
 
         /**
@@ -39,22 +28,11 @@ class AssignmentService extends ModerationService {
      * @return {Promise<void>}
      */
     async getAllDeletedAt() {
-        try {
-            return await AssignmentRepository.readAll({deletedAt: {$exists: true}});
-        } catch (ex) {
-            log(ex);
-            throw new Error('Er is iets mis gegaan bij het ophalen van de deletedAt assignments');
-        }
+        return await AssignmentRepository.readAll({deletedAt: {$exists: true}});
     }
 
     async create(data) {
-        try {
-            return await AssignmentRepository.create(data);
-        }
-        catch(ex) {
-            log (ex);
-            throw new Error('Fout bij het aanmaken van een nieuwe assignment');
-        }
+        return await AssignmentRepository.create(data);
     }
 
     async update(id, assignment) {
@@ -79,12 +57,7 @@ class AssignmentService extends ModerationService {
      * @return {Promise<void>}
      */
     async getAll(id){
-        try{
-            return await AssignmentRepository.readAllWhere({createdBy: id});
-        }catch (ex) {
-            log (ex);
-            throw new Error('Ophalen van alle assignments is mislukt');
-        }
+        return await AssignmentRepository.readAllWhere({createdBy: id});
     }
 
     /**
@@ -93,31 +66,16 @@ class AssignmentService extends ModerationService {
      * @return {Promise<void>}
      */
     async showById(id){
-        try{
-            return await AssignmentRepository.readAllById(id);
-        }catch (ex) {
-            log (ex);
-            throw new Error('Ophalen van een assignment is mislukt');
-        }
+        return await AssignmentRepository.readAllById(id);
     }
 
     async showAll(){
-        try{
-            return await AssignmentRepository.readAllWhere({});
-        }catch (ex) {
-            log (ex);
-            throw new Error('Ophalen van assignments is mislukt');
-        }
+        return await AssignmentRepository.readAllWhere({});
     }
 
     async getAllRecommended(userId) {
-        try{
-            const user = await UserRepository.read(userId);
-            return await AssignmentRepository.readAllWhere({requiredSkills: { $in : user.makerProfile.skills} , open: true, deletedAt: {$exists: false}, archivedAt: null});
-        }catch (ex) {
-            log (ex);
-            throw new Error('Ophalen van recommended assignments is mislukt');
-        }
+        const user = await UserRepository.read(userId);
+        return await AssignmentRepository.readAllWhere({requiredSkills: { $in : user.makerProfile.skills} , open: true, deletedAt: {$exists: false}, archivedAt: null});
     }
 }
 
