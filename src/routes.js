@@ -4,7 +4,6 @@ const auth = require('./middleware/auth');
 const company = require('./middleware/company');
 const admin = require('./middleware/admin');
 const validateAdminOrUserId = require('./middleware/validators/validateAdminOrUserId');
-const validateAdminOrUserIdOrCompany = require('./middleware/validators/validateAdminOrUserIdOrCompany');
 const adminOrCompany = require('./middleware/companyOrAdmin');
 const {multipartUpload, videoConvert} = require('./middleware/upload');
 const {
@@ -24,7 +23,7 @@ const {
 router.get('/users', [auth, admin], UserController.getAllUsers);
 router.post('/users/login', UserController.login);
 router.post('/users', UserController.register.bind(UserController));
-router.get('/users/:id', [auth, validateAdminOrUserIdOrCompany], UserController.show);
+router.get('/users/:id', [auth, validateAdminOrUserId], UserController.show);
 router.put('/users/:id', [auth, validateAdminOrUserId], UserController.update.bind(UserController));
 router.delete('/users/:id', [auth, validateAdminOrUserId], UserController.delete);
 router.put('/users/:id/skills', auth, UserController.updateMySkills);
