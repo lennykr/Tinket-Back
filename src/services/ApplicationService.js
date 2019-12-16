@@ -12,8 +12,9 @@ class ApplicationService {
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
         try {
-            if(await ApplicationRepository.readMakerApplication(application.maker, application.assignment == []))
+            if(await ApplicationRepository.readMakerApplication(application.maker, application.assignment) == [])
                 return await ApplicationRepository.create(application);
+            throw new Error('Je hebt al een applicatie ingestuurd voor deze assignment!');
         } catch (ex) {
             log(ex);
             throw new Error('Toevoegen van een application is mislukt');
