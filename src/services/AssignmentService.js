@@ -113,7 +113,7 @@ class AssignmentService extends ModerationService {
     async getAllRecommended(userId) {
         try{
             const user = await UserRepository.read(userId);
-            return await AssignmentRepository.readAllWhere({requiredSkills: { $in : user.makerProfile.skills} , open: true});
+            return await AssignmentRepository.readAllWhere({requiredSkills: { $in : user.makerProfile.skills} , open: true, deletedAt: {$exists: false}, archivedAt: null});
         }catch (ex) {
             log (ex);
             throw new Error('Ophalen van recommended assignments is mislukt');
