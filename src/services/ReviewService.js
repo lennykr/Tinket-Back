@@ -29,7 +29,7 @@ class ReviewService extends ModerationService {
      */
     async getAllFlaggedAt() {
         try {
-            return await ReviewRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: false}}, "flaggedAt");
+            return await ReviewRepository.readAll({deletedAt: {$exists: false}, flagResolvedAt: {$exists: false}, flaggedAt: {$exists: true}}, "flaggedAt");
         } catch (ex) {
             log(ex);
             throw new Error('Er is iets mis gegaan bij het ophalen van de flaggedAt reviews');
