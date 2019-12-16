@@ -23,6 +23,10 @@ class ApplicationRepository extends BaseRepository {
             .populate(toPopulate);
     }
 
+    readMakerApplication(maker, assignment){
+        return this.model.find({maker, assignment});
+    }
+
 }
 
 module.exports = ApplicationRepository;

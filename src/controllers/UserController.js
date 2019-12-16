@@ -76,7 +76,7 @@ module.exports = class UserController {
         }
     }
 
-    sendMail(req, res){
+    sendMail(req){
         const transport = nodemailer.createTransport({
             host: "smtp.mailtrap.io",
             port: 2525,

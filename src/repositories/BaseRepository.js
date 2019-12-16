@@ -14,7 +14,9 @@ class BaseRepository {
      */
     async create(data) {
         const model = new this.model(data);
-        return await model.save();
+        console.log(model);
+        console.log(data);
+        //return await model.save();
     }
 
     /**
