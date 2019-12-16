@@ -61,7 +61,7 @@ router.delete('/assignments/:id', [auth, admin], AssignmentController.delete);
 router.get('/assignments/:id/flag', auth, AssignmentController.flag);
 router.get('/assignments/:id/flag/resolve', [auth, admin], AssignmentController.resolveFlag);
 router.get('/assignments/:id/flag/ignore', [auth, admin], AssignmentController.ignoreFlag);
-router.get('/assignments/:id/flag/ignore/undo', [auth, admin], ReviewController.undoIgnoreFlag);
+router.get('/assignments/:id/flag/ignore/undo', [auth, admin], AssignmentController.undoIgnoreFlag);
 
 
 // -- Reviews --
