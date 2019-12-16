@@ -22,15 +22,13 @@ class UploadService {
             pending: true,
         });
 
-        await uploader.upload(dataURI, {
+        uploader.upload(dataURI, {
             resource_type: 'video',
             // overwrite: false,
             async: true,
-            eager_async: true,
             //discard_original_filename: false,
             notification_url: `${process.env.NOTIFICATION_URL}/upload/${pendingUpload._id}`,
            // public_id: name,
-            chunk_size: 6000000
         });
 
         return pendingUpload;
