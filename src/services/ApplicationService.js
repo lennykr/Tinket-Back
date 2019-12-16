@@ -10,7 +10,7 @@ class ApplicationService {
         if (!user.isAdmin && user.isCompany())
             throw new BadRequestError('Je hebt een maker account nodig om deze actie uit te voeren!');
 
-        if(await ApplicationRepository.readMakerApplication(application.maker, application.assignment) == [])
+        if ((await ApplicationRepository.readMakerApplication(application.maker, application.assignment)).length == 0)
             return await ApplicationRepository.create(application);
 
         throw new Error('Je hebt al een applicatie ingestuurd voor deze assignment!');
